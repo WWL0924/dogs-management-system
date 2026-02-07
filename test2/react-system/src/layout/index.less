@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  min-width: 950px;
+  height: 100%;
+
+  .ant-layout-sider {
+    background-color: #001529;
+  }
+
+  // 页面中的按钮
+  .ant-layout-sider-trigger {
+    //按钮固定在页面底部 不随滚动移动
+    position: fixed;
+    bottom: 0;
+    //图层优先级 按钮在其他内容上面
+    z-index: 1;
+    height: 48px;
+    color: #fff;
+    text-align: center;
+    background-color: #002140;
+    cursor: pointer;
+    // 所有动画过渡时间 0.2s (折叠展开之类的)
+    transition: all 0.2s;
+  }
+
+  //右侧内容区域 撑满可滚动
+  .ant-layout {
+    overflow: hidden;
+
+    .ant-layout-content {
+      //paddingh和border包含在宽高里 不会撑大容器
+      box-sizing: border-box;
+      //父容器里占据剩余空间
+      flex: 1;
+      padding: 10px 12px;
+      // 滚动
+      overflow: scroll;
+    }
+  }
+
+}
