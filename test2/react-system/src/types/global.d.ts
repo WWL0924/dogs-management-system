@@ -1,4 +1,5 @@
 declare type Recordable<T = any> = Record<string, any>
+//等价于 { [key: string]: any }
 //key 是string value是任意类型的
 
 declare interface ViteEnv {
@@ -10,7 +11,6 @@ declare interface ViteEnv {
   VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
   VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
 }
-
 
 //menu
 //类型分组作用域
@@ -24,4 +24,14 @@ declare namespace Menu {
     icon?: string;
     children?: MenuOptions[];
   }
-} 
+}
+
+//表单配置接口FormConfigItem
+//全局接口类型，不需要 import 即可使用
+declare interface FormConfigItem {
+  label: string,
+  name: string,
+  type: 'input' | 'radio' | 'select',
+  options?: { label: string, value: any }[],
+  placeholder?: string,
+}

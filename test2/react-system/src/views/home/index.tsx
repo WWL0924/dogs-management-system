@@ -1,10 +1,11 @@
 import ButtonPer from "@/components/ButtonPer";
 import { Button } from "antd";
-
+import { formConfig } from './config'
+import FormGenerator from "@/components/formGenerator";
 
 function Home() {
   return (
-    <>
+    <div>
       <h1>home</h1>
       {/* 应用组件 */}
       <ButtonPer
@@ -14,7 +15,6 @@ function Home() {
         }
       >
       </ButtonPer>
-{/* 这里不会被渲染  */}
       <ButtonPer
         btn={'del'}
         Comp={
@@ -22,8 +22,23 @@ function Home() {
         }
       >
       </ButtonPer>
-    </>
+      {/* 表单生成组件的渲染 */}
+      <FormGenerator
+        config={formConfig}
+      >
+      </FormGenerator>
+    </div>
   )
+
+  //formConfig
+  // [
+  //   {
+  //     label: '姓名',
+  //     name: 'name',
+  //     //输入框类别
+  //     type: 'input',
+  //   }
+  // ]
 }
 
 export default Home
