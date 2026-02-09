@@ -9,7 +9,12 @@ const Home = [
       {
         path: '/sys/home',
         // 副菜单
-        element: lazyLoad(React.lazy(() => import('@/views/home/index')))
+        element: lazyLoad(React.lazy(() => import('@/views/home/index'))),
+        meta: {
+          title: '首页',
+          key: '/sys/home',
+
+        }
       }
     ]
 

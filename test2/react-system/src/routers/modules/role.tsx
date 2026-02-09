@@ -9,7 +9,11 @@ const Role = [
       {
         path: '/sys/role',
         // 副菜单
-        element: lazyLoad(React.lazy(() => import('@/views/role/index')))
+        element: lazyLoad(React.lazy(() => import('@/views/role/index'))),
+        meta: {
+          title: '角色',
+          key: '/sys/role'
+        }
       }
     ]
 

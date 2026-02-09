@@ -19,7 +19,6 @@ Object.keys(metaRouters).forEach(item => {
     routerArray.push(...metaRouters[item][key])
   });
 })
-console.log('routerArray导入的路由 应该包含home', routerArray) //这里也对了
 const rootRouter = [
   {
     path: '/',
@@ -84,3 +83,4 @@ const Router = () => {
 
 //导出这个组件
 export default Router
+export { routerArray }

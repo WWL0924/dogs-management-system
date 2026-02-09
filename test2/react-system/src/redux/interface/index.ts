@@ -3,5 +3,9 @@ export interface GlobalState {
 }
 
 export interface AuthState {
-  authRouter: string[]
+  authRouter: string[],
+  authButtons: {
+    [propName: string]: any
+  }
 }
+

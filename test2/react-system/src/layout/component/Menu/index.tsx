@@ -6,7 +6,7 @@ import type { MenuProps } from 'antd';
 import * as Icons from '@ant-design/icons'
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { setAuthRouter } from '@/redux/module/auth/auth';
+import { setAuthRouter } from '@/redux/module/auth/action';
 import { connect } from 'react-redux';
 
 
