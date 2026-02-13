@@ -1,4 +1,5 @@
-import { Button } from "antd";
+import { Button, Input } from "antd";
+import { Form } from 'antd';
 import { setToken } from "@/redux/module/global/action";
 //返回包装后的组件
 import { connect } from "react-redux";
@@ -17,22 +18,39 @@ const Login = (props: LoginProps) => {
 
   //点击按钮 把token写到local storage里面
   const handleLogin = () => {
+    //这里应该获取账号密码和身份
     console.log('login')
-    //更新state.token
-    setToken('token')
+   
     //跳转功能
     //这里是点击登录之后都要进入初始化页面么
     navigate('/loading')
   }
-
+  //注册功能
+  const handleRegister = () => {
+    console.log('register')
+     //更新state.token
+    setToken('token')
+    console.log()
+    //这里怎么保存身份
+    
+  }
 
   return (
     <>
-      <Button
-        type="primary"
-        onClick={handleLogin}
-
-      >login</Button>
+      <Form>
+        <Form.Item name="username" label="用户名">
+          <Input />
+        </Form.Item>
+        <Form.Item name="password" label="密码">
+          <Input.Password />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={handleLogin}>登录</Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={handleRegister}>注册</Button>
+        </Form.Item>
+      </Form>
     </>
   )
 }

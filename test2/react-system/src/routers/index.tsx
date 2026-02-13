@@ -2,10 +2,11 @@ import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import lazyLoad from "./utils/lazyLoad";
 import { store } from "@/redux";
-import { LayoutIndex } from "./constant";
 //引入
 import NoPermission from '@/views/errorPage/403'
 import NoFound from '@/views/errorPage/404'
+import { LayoutIndex } from "./constant";
+import Login from "@/views/Login";
 
 
 
@@ -20,38 +21,39 @@ Object.keys(metaRouters).forEach(item => {
   });
 })
 const rootRouter = [
+  // 点击首页按钮就到登录页面 然后登录页面的登录成功后再根据role跳转到不同的首页
+  //首页
   {
     path: '/',
-    element: <Navigate to='/login' />
+    element: <Navigate to='/front' />
   },
+  {
+    path: '/front',
+    element: lazyLoad(React.lazy(() => import('@/views/front'))),
+  },
+  //登录页面
   {
     path: '/login',
-    name: '/home',
-    element: lazyLoad(React.lazy(() => import('@/views/Login'))),
-    // 补充信息
-    meta: {
-      // 不需要登录验证
-      requireAuth: false,
-      title: '登录',
-      key: 'login'
-    }
+    element: <Login />
   },
-  //定义loading 路由
-  //系统初始化的缓冲
+  //根据role跳转到不同的首页
   {
-    element: <LayoutIndex />,
-    path: '/',
-    meta: {
-      title: 'loading',
-    },
+    path: '/admin',
+    element: <LayoutIndex />, // 布局
     children: [
       {
-        path: '/loading',
-        element: lazyLoad(React.lazy(() => import('@/views/loading/index'))),
-        meta: {
-          title: 'loading',
-          key: '/loading'
-        }
+        path: '/admin',
+        element: lazyLoad(React.lazy(() => import('@/views/admin/index'))),
+      },
+    ]
+  },
+  {
+    path: '/resident',
+    element: <LayoutIndex />, // 布局
+    children: [
+      {
+        path: '/resident',
+        element: lazyLoad(React.lazy(() => import('@/views/resident/index'))),
       },
     ]
   },

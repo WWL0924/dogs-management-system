@@ -1,4 +1,4 @@
-//这里在写全局的表单配置信息
+//这要改成新增犬只的信息
 
 export const formConfig: FormConfigItem[] = [
   {

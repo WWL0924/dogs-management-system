@@ -11,15 +11,13 @@ import { useEffect } from "react"
 
 
 const LayoutIndex = (props: any) => {
-  //从store中获取token
-  // const userToken = store.getState().global.token
-  // if (!userToken) {
-  //   return <NavLink to='/login' />
-  // }
 
-  //这里是从LayoutIndex组件的props解构出setAuthButton
+  //这里是从LayoutIndex组件的props解构出setAuthButton和role(权限)
   const { setAuthButton } = props
-
+  //  const role = useSelector((state: RootState) => state.user.role);
+  //这里先写用户界面
+  const role = 'resident'
+  console.log('角色权限role', role)
   const getAuthButtonsList = async () => {
     const data = {
       '/sys/home': ['add', 'del']
@@ -32,12 +30,13 @@ const LayoutIndex = (props: any) => {
 
   useEffect(() => {
     getAuthButtonsList()
-  })
+  }, [])
 
   return (
     <div className="container">
       <Sider collapsible width={220} theme="dark" >
-        <LayoutMenu />
+        {/* 这里根据role来显示不同的菜单 */}
+        <LayoutMenu role={role} />
       </Sider>
       <Layout>
         <Layout.Header>
