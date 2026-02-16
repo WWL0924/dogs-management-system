@@ -5,12 +5,19 @@ import type { Action } from "redux";
 //引入action type常量
 import * as types from '@/redux/mutation-types'
 //引入immer的produce生成新的state
-import { produce } from "immer";
+import { produce, type Draft } from "immer";
+import type { UserInfo } from "@/redux/interface";
+
 
 
 //描述state
 const globalState: GlobalState = {
-  token: ''
+  token: '',
+  userInfo: {
+    role: 'resident',
+    username: ''
+  }
+
 }
 
 //描述reducer能处理哪些action
@@ -20,8 +27,14 @@ interface SetTokenAction extends Action {
 }
 
 
+//描述reducer能处理哪些action
+interface SetUserInfoAction extends Action {
+  type: typeof types.SET_USER_INFO,
+  userInfo: UserInfo
+}
+
 //reducer处理的action约束
-type ActionType = SetTokenAction
+type ActionType = SetTokenAction | SetUserInfoAction
 
 //这里是 reducer的核心功能 根据action算出新的state
 const global = (state: GlobalState = globalState, action: ActionType) => {
@@ -33,17 +46,19 @@ const global = (state: GlobalState = globalState, action: ActionType) => {
 
   //   }
   // }
-
-
   //produce参数 
   // 当前旧state 不可变
-  // state的可变草稿可以直接修改 immer会根据修改 生成一个新的 state
+  // draftState可以修改 state的可变草稿可以直接修改 
+  //回调函数在调用setAction方法就会执行
   return produce(state, (draftState: Draft<GlobalState>) => {
-    //修改draft后 immer自动生成新的state
+    //根据当前action类型 来修改state
     switch (action.type) {
-      //修改draftState immer自动生成新的state
       case types.SET_TOKEN:
         draftState.token = action.token;
+        break;
+      //这里的逻辑我不太懂
+      case types.SET_USER_INFO:
+        draftState.userInfo = action.userInfo;
         break;
       default:
         break;

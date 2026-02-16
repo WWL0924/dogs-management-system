@@ -1,5 +1,6 @@
 export interface GlobalState {
   token: string,
+  userInfo: UserInfo
 }
 
 export interface AuthState {
@@ -8,4 +9,8 @@ export interface AuthState {
     [propName: string]: any
   }
 }
-
+//身份
+export interface UserInfo {
+  role: 'resident' | 'admin',
+  username: string,
+}

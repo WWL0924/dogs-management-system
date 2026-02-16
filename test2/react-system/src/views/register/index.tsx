@@ -1,51 +1,26 @@
-import { Button, Input, Card, Form, Typography, Space, Dropdown, Select } from "antd";
-import { setToken, setUserInfo } from "@/redux/module/global/action";
+import { Button, Input, Card, Form, Typography, Space, Select } from "antd";
+import { setToken } from "@/redux/module/global/action";
 //返回包装后的组件
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined, LockOutlined, SettingOutlined } from '@ant-design/icons';
-import { useEffect } from "react";
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+//下拉菜单
+import { Dropdown } from 'antd';
+
 const { Title, Text } = Typography;
 
-interface LoginProps {
-  setToken: typeof setToken
-  setUserInfo: typeof setUserInfo,
-  token: string,
-  role: string,
-}
 
-
-const Login = (props: LoginProps) => {
-  //从props取出setToken方法
-  const { setToken, setUserInfo, token, role } = props
+const Register = () => {
   //定义跳转
   const navigate = useNavigate()
 
+
   //输入完毕获取数据
   const handleFinish = (values: any) => {
-    const { role, username } = values
-    //存入store
-    setUserInfo({ role, username })
-    //路由守卫
-    setToken('login')
-  }
-  //首次渲染完成和这些值变化的时候触发?
-  //等待token真的变化之后再跳转
-  useEffect(() => {
-    if (!token || !role) return
-    if (role === 'resident') {
-      navigate('/resident')
-    }
-    if (role === 'admin') {
-      navigate('/admin')
-    }
-  }, [token, role, navigate])
-  //注册功能
-  const handleRegister = () => {
-    console.log('register')
-    //跳转到注册页面
-    navigate('/register')
-
+    //获取账号密码
+    const { username, password, role } = values
+    console.log(username, password, role)
+    navigate('/login')
   }
 
   return (
@@ -84,6 +59,7 @@ const Login = (props: LoginProps) => {
           >
             <Input.Password prefix={<LockOutlined style={{ color: '#bfbfbf' }} />} placeholder="密码" />
           </Form.Item>
+          {/* 下拉菜单选择身份 */}
           <Form.Item
             name="role"
             rules={[{ required: true, message: '请选择身份' }]}
@@ -98,14 +74,13 @@ const Login = (props: LoginProps) => {
                 value: 'admin',
               },
             ]}
+              //
+              onChange={(val) => console.log(val)}
             />
           </Form.Item>
           <Form.Item style={{ marginTop: '32px' }}>
             <Space direction="vertical" style={{ width: '100%' }} size="middle">
-              <Button type="primary" block htmlType="submit">
-                登录
-              </Button>
-              <Button block onClick={handleRegister}>
+              <Button block type="primary" htmlType="submit">
                 注册账号
               </Button>
             </Space>
@@ -117,12 +92,7 @@ const Login = (props: LoginProps) => {
 }
 
 //操作action通过dispath 组件里不用自己调用 dispatch 直接调用 props 方法就行
-const mapDispatchToProps = { setToken, setUserInfo }
-const mapStateToProps = (state: any) => {
-  return {
-    token: state.global.token,
-    role: state.global.userInfo?.role || '' // 必须取出 role 
-  }
-}
+const mapDispatchToProps = { setToken }
+
 //返回可以直接通过props调用dispatch的组件
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(Register)

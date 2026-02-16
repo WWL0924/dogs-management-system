@@ -7,7 +7,7 @@ import NoPermission from '@/views/errorPage/403'
 import NoFound from '@/views/errorPage/404'
 import { LayoutIndex } from "./constant";
 import Login from "@/views/Login";
-
+import Register from "@/views/Register";
 
 
 
@@ -35,6 +35,11 @@ const rootRouter = [
   {
     path: '/login',
     element: <Login />
+  },
+  //注册页面
+  {
+    path: '/register',
+    element: <Register />
   },
   //根据role跳转到不同的首页
   {

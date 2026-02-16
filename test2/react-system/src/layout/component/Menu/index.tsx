@@ -80,6 +80,7 @@ interface LayoutMenuProps {
 
 const LayoutMenu = (props: LayoutMenuProps) => {
   const { role, setAuthRouter } = props
+  console.log('菜单页面获取的role', role)
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -186,5 +187,8 @@ const LayoutMenu = (props: LayoutMenuProps) => {
 }
 
 const mapDispathToProps = { setAuthRouter }
+const mapStateToProps = (state: any) => ({
+  role: state.global.userInfo.role
+})
 
-export default connect(null, mapDispathToProps)(LayoutMenu)
+export default connect(mapStateToProps, mapDispathToProps)(LayoutMenu)
