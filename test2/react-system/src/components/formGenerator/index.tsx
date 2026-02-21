@@ -11,6 +11,9 @@ interface FormGeneratorProps {
   confirmText?: string,
   //按钮功能
   handelBtn?: (values: any) => void,
+  //是否可变
+  disabled?: boolean,
+
 }
 
 //React.FC函数组件类型
@@ -25,19 +28,22 @@ const SearchForm: React.FC<FormGeneratorProps> = forwardRef(({
   //按钮字段
   confirmText,
   //按钮功能
-  handelBtn
+  handelBtn,
+  //是否可变
+  //这里不是 默认true么 config里面特地写的是不可变的
+  disabled = true,
 }, ref) => {
 
   const renderFormItem = (item: FormConfigItem) => {
     switch (item.type) {
       case 'input':
-        return <Input placeholder={item.placeholder} type='input' />
+        return <Input placeholder={item.placeholder} type='input' disabled={item.disabled} />
       case 'select':
         return (
-          <Select placeholder={item.placeholder}>
+          <Select placeholder={item.placeholder} disabled={item.disabled}>
             {item.options?.map((option) => (
               // 是Select的子组件
-              <Select.Option key={option.value} value={option.value}>
+              <Select.Option key={option.value} value={option.value} disabled={item.disabled}>
                 {option.label}
               </Select.Option>
             ))}
@@ -45,11 +51,11 @@ const SearchForm: React.FC<FormGeneratorProps> = forwardRef(({
         )
       case 'checkbox':
         return (
-          <Checkbox.Group options={item.options} />
+          <Checkbox.Group options={item.options} disabled={item.disabled} />
         )
       case 'datepicker':
         return (
-          <DatePicker placeholder={item.placeholder} />
+          <DatePicker placeholder={item.placeholder} disabled={item.disabled} />
         )
     }
   }

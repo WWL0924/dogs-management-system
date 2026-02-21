@@ -1,0 +1,87 @@
+{
+  "dogs": [
+    {
+      "id": "5fa3",
+      "name": "小a",
+      "breed": "柴犬",
+      "sex": " 雄性",
+      "age": "3",
+      "vaccine": true,
+      "record": "2025-08-01",
+      "masterName": "张三",
+      "phone": "13800000000",
+      "number": "001"
+    },
+    {
+      "name": "小b",
+      "breed": "金毛",
+      "sex": "雌性",
+      "age": "3",
+      "vaccine": true,
+      "record": "2025-08-01",
+      "masterName": "张三",
+      "phone": "13800000000",
+      "number": "002",
+      "id": "0c54"
+    },
+    {
+      "id": "0090",
+      "name": "小c",
+      "breed": "柴犬",
+      "sex": " 雄性",
+      "age": "3",
+      "vaccine": true,
+      "record": "2025-08-01",
+      "masterName": "李四",
+      "phone": "13800000000",
+      "number": "003"
+    },
+    {
+      "id": "a2a0",
+      "name": "a",
+      "breed": "金毛",
+      "sex": "雄性",
+      "age": "2",
+      "vaccine": [
+        true
+      ],
+      "record": "2026-02-02T16:00:00.000Z",
+      "masterName": "张三",
+      "phone": "12345678",
+      "num": "12345"
+    }
+  ],
+  "resident": [
+    {
+      "name": "张三",
+      "account": "zhangsan",
+      "password": "123456"
+    },
+    {
+      "name": "李四",
+      "account": "lisi",
+      "password": "123456"
+    },
+    {
+      "id": "1d23",
+      "account": "wangwu",
+      "password": "123456",
+      "role": "resident",
+      "name": "王五"
+    }
+  ],
+  "admin": [
+    {
+      "name": "管理员1",
+      "account": "admin",
+      "password": "123456"
+    },
+    {
+      "id": "d1a3",
+      "account": "wwl",
+      "password": "123456",
+      "role": "admin",
+      "name": "wwl"
+    }
+  ]
+}

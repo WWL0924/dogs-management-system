@@ -36,4 +36,5 @@ declare interface FormConfigItem {
   placeholder?: string,
   render?: (value: any) => any,
   options?: { label: string, value: any }[],
+  disabled?: boolean,
 }

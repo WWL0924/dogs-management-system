@@ -52,7 +52,9 @@ export const mineConfig = [
     label: '主人姓名',
     name: 'masterName',
     type: 'input',
-    placeholder: '请输入主人姓名'
+    placeholder: '请输入主人姓名',
+    // 不可以改变
+    disabled: true
   },
   {
     label: '联系电话',

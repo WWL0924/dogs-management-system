@@ -1,11 +1,14 @@
-import { Button, Input, Card, Form, Typography, Space, Dropdown, Select } from "antd";
+import { Button, Input, Card, Form, Typography, Space, Dropdown, Select, message } from "antd";
 import { setToken, setUserInfo } from "@/redux/module/global/action";
 //返回包装后的组件
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined, SettingOutlined } from '@ant-design/icons';
 import { useEffect } from "react";
+
 const { Title, Text } = Typography;
+
+
 
 interface LoginProps {
   setToken: typeof setToken
@@ -20,16 +23,37 @@ const Login = (props: LoginProps) => {
   const { setToken, setUserInfo, token, role } = props
   //定义跳转
   const navigate = useNavigate()
+  //获取表单实例对象
+  const [form] = Form.useForm()
 
   //输入完毕获取数据
-  const handleFinish = (values: any) => {
-    const { role, username } = values
-    //存入store
-    setUserInfo({ role, username })
-    //路由守卫
-    setToken('login')
+  const handleFinish = async (values: any) => {
+    const { role, account, password } = values
+    //登录校验功能
+    const http = 'http://localhost:4000' + '/' + role
+    const roleData = async () => {
+      const res = await fetch(http)
+      const data = await res.json()
+      console.log('mock拿到后端数据', data)
+      return data
+    }
+    //判断账号密码是否匹配
+    const user = await roleData().then((data: any) => data.find((item: any) => item.account === account && item.password === password))
+    console.log('账号密码是否匹配', user)
+    if (user) {
+      //存入store
+      setUserInfo({ role, account })
+      //路由守卫
+      setToken('login')
+    } else {
+      alert('账号或密码错误')
+      //清空输入框 
+      form.resetFields()
+    }
   }
-  //首次渲染完成和这些值变化的时候触发?
+
+
+  //首次渲染完成和这些值变化的时候触发
   //等待token真的变化之后再跳转
   useEffect(() => {
     if (!token || !role) return
@@ -40,6 +64,8 @@ const Login = (props: LoginProps) => {
       navigate('/admin')
     }
   }, [token, role, navigate])
+
+
   //注册功能
   const handleRegister = () => {
     console.log('register')
@@ -47,6 +73,7 @@ const Login = (props: LoginProps) => {
     navigate('/register')
 
   }
+
 
   return (
     <div style={{
@@ -70,12 +97,12 @@ const Login = (props: LoginProps) => {
           <Text type="secondary">宠物狗管理系统</Text>
         </div>
 
-        <Form layout="vertical" size="large" onFinish={handleFinish}>
+        <Form layout="vertical" size="large" onFinish={handleFinish} form={form}>
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: '请输入用户名' }]}
+            name="account"
+            rules={[{ required: true, message: '请输入账号' }]}
           >
-            <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="用户名" />
+            <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="账号" />
           </Form.Item>
 
           <Form.Item

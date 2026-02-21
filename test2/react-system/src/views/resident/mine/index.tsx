@@ -2,31 +2,67 @@ import ButtonPer from "@/components/ButtonPer";
 import { Button, Form, Input, Modal, Table } from "antd";
 import { mineConfig } from './config'
 import FormGenerator from "@/components/formGenerator";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { access } from "fs";
+import { connect } from "react-redux";
 
-function Home() {
-  const data = [
-    {
-      key: 1,
-      name: '小a',
-      breed: '柴犬',
-      sex: '雄性',
-      age: '3',
-      vaccine: true,
-    },
-    {
-      key: 2,
-      name: '小b',
-      breed: '金毛',
-      sex: '雌性',
-      age: '3',
-      vaccine: true,
-    },
-  ]
+
+function Home(props: any) {
   //列表数据
-  const [tableData, setTableData] = useState(data)
+  const [tableData, setTableData] = useState([])
   //页面数据
-  const [mineData, setMineData] = useState(data)
+  const [mineData, setMineData] = useState([])
+  //获取当前登录的用户账号
+  const { account } = props
+  console.log('当前登录的账号', account)
+  //当前登录的用户名
+  const [userName, setUserName] = useState('用户')
+
+  //根据accout 获取相应的name
+  const fetchName = async () => {
+    try {
+      const res = await fetch('http://localhost:4000/resident')
+      const data = await res.json()
+      console.log('从mock中获取的用户信息', data)
+      const name = data.find((item: any) => item.account === account)?.name || '用户'
+      console.log('从mock中获取的用户名', name)
+      return name
+    }
+    catch (error) {
+      console.log('从mock中获取用户名失败', error)
+    }
+  }
+
+  //从mock获取数据并且更新data
+  const fetchData = async (name: string) => {
+    try {
+      const res = await fetch('http://localhost:4000/dogs')
+      const result = await res.json()
+      const targetName = name || userName
+
+      const data = result.filter((item: any) => item.masterName === targetName)
+      console.log('fetchDate方法从mock获取的相应用户的犬只', result)
+      setMineData(data)
+      setTableData(data)
+    }
+    catch (error) {
+      console.log('从mock获取数据失败', error)
+    }
+  }
+
+  //渲染完毕后获取数据?
+  useEffect(() => {
+    //等名字拿到之后再存入
+    const init = async () => {
+      const name = await fetchName()
+      console.log('从mock中获取的用户名', name)
+      setUserName(name)//这里是异步的 稍后执行
+      fetchData(name)
+    }
+    init()
+  }, [])
+
+
   //查询功能
   const handleSearch = (values: any) => {
     console.log('点击查询按钮表单值', values)
@@ -55,42 +91,52 @@ function Home() {
   //弹窗是否可见
   const [visible, setVisible] = useState(false)
   const form = useRef(null)
-  const mapFormValues = (values: any) => {
-    return {
-      key: mineData.length + 1,
-      name: values.name,
-      breed: values.breed,
-      sex: values.sex,
-      age: values.age,
-      vaccine: values.vaccine,
-    }
-  }
+  // const mapFormValues = (values: any) => {
+  //   return {
+  //     key: mineData.length + 1,
+  //     name: values.name,
+  //     breed: values.breed,
+  //     sex: values.sex,
+  //     age: values.age,
+  //     vaccine: values.vaccine,
+  //   }
+  // }
   //新增功能
   const handleAdd = () => {
     setVisible(true)
-  }
-
-  //弹窗内按钮 这里可能要写useEffect
-  const handleOk = () => {
-    form.current.validateFields().then((values) => {
-      console.log('校验通过', values)
-      setVisible(false)
-      //表单的值
-      const formvalues = form.current.getFieldsValue()
-      console.log('当前输入的值', formvalues)
-      //再把弹窗里面的内容给给Table 这里需要再处理一下 只把一部分显示出来
-      setMineData([...mineData, mapFormValues(formvalues)])
-      setTableData([...tableData, mapFormValues(formvalues)])
-      console.log('新增之后的数据', mineData)
-    })
-      .catch((error) => {
-        console.log('校验失败', error)
+    setTimeout(() => {
+      // 使用可选链防止报错
+      form.current?.setFieldsValue({
+        masterName: userName,
       })
+    })
   }
 
+  const handleOk = () => {
+    // 1. 校验表单
+    form.current.validateFields().then(async (values) => {
+
+      // 2. 发送 POST 请求
+      await fetch('http://localhost:4000/dogs', {
+        method: 'POST', // 指定方法
+        headers: {
+          'Content-Type': 'application/json' // 告诉后端发的是 JSON
+        },
+        body: JSON.stringify(values) // 把对象转成 JSON 字符串
+      });
+      // 3. 后续操作
+      console.log('handleOk方法提交的数据', values);
+      setVisible(false); // 关弹窗
+      fetchData(); // 刷新列表 (去拿最新数据)
+
+    }).catch((error) => {
+      console.log('校验失败或请求失败', error);
+    });
+  };
 
 
-  //配置
+
+  //配置 这里不需要清洗数据
   const columns = [
     { title: '姓名', dataIndex: 'name', key: 'name' },
     { title: '品种', dataIndex: 'breed', key: 'breed' },
@@ -140,5 +186,10 @@ function Home() {
 
 
 }
-
-export default Home
+const mapStateToProps = (state: any) => {
+  return {
+    account: state.global.userInfo?.account || '' // 必须取出 account
+  }
+}
+//返回可以直接通过props调用dispatch的组件
+export default connect(mapStateToProps, null)(Home)

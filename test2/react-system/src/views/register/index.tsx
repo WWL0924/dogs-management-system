@@ -13,13 +13,37 @@ const { Title, Text } = Typography;
 const Register = () => {
   //定义跳转
   const navigate = useNavigate()
+  //获取表单实例对象
+  const [form] = Form.useForm()
 
 
   //输入完毕获取数据
-  const handleFinish = (values: any) => {
+  const handleFinish = async (values: any) => {
     //获取账号密码
-    const { username, password, role } = values
-    console.log(username, password, role)
+    const { account, password, role, name } = values
+    console.log(account, password, role, name)
+    //存入json
+    const http = 'http://localhost:4000' + '/' + role
+    //查重
+    // 1. 查重
+    const checkRes = await fetch(`http://localhost:4000/${role}?account=${account}`)
+    const checkData = await checkRes.json()
+
+    if (checkData.length > 0) {
+      alert('账号已存在！') // 或者用 message.error
+      //清空输入框 
+      form.resetFields()
+      return // 只要这里 return 了，下面就不会执行了
+    }
+
+    // 注册功能
+    fetch(http, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ account, password, role, name }),
+    })
     navigate('/login')
   }
 
@@ -45,14 +69,19 @@ const Register = () => {
           <Text type="secondary">宠物狗管理系统</Text>
         </div>
 
-        <Form layout="vertical" size="large" onFinish={handleFinish}>
+        <Form layout="vertical" size="large" onFinish={handleFinish} form={form}>
           <Form.Item
-            name="username"
+            name="name"
             rules={[{ required: true, message: '请输入用户名' }]}
           >
             <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="用户名" />
           </Form.Item>
-
+          <Form.Item
+            name="account"
+            rules={[{ required: true, message: '请输入账号' }]}
+          >
+            <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="账号" />
+          </Form.Item>
           <Form.Item
             name="password"
             rules={[{ required: true, message: '请输入密码' }]}

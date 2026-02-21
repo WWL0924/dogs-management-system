@@ -53,6 +53,17 @@ const ResidentDashboard: React.FC = () => {
         >
           快速开始：我的犬只
         </Button>
+        {/* 退出登录 */}
+        <Button
+          type="primary"
+          size="large"
+          shape="round"
+          icon={<RightOutlined />}
+          onClick={() => navigate('/front')}
+          style={{ padding: '0 32px', height: 48, fontSize: 16 }}
+        >
+          退出登录
+        </Button>
       </Card>
     </div>
   );

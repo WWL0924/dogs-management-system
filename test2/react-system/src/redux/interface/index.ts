@@ -12,5 +12,5 @@ export interface AuthState {
 //身份
 export interface UserInfo {
   role: 'resident' | 'admin',
-  username: string,
+  account: string,
 }
