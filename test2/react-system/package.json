@@ -8,7 +8,8 @@
     "test": "vite build --test",
     "build": "tsc -b && vite build --production",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock": "json-server --watch db.json --port 3001"
   },
   "dependencies": {
     "antd": "^6.2.2",
@@ -31,6 +32,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "json-server": "^1.0.0-beta.9",
     "less": "^4.5.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",

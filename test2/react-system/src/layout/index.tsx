@@ -44,8 +44,8 @@ const LayoutIndex = (props: any) => {
           {/* 子路由的占位符 home组件会渲染到这个位置 */}
           <Outlet />
         </Layout.Content>
-        <Layout.Footer>
-          footer
+        <Layout.Footer style={{ textAlign: 'center' }}>
+          {new Date().getFullYear()}幸福社区宠物狗管理系统 By 武文靓
         </Layout.Footer>
       </Layout>
     </div>
@@ -58,6 +58,7 @@ const mapDispatchToProps = { setAuthButton }
 const mapStateToProps = (state: any) => {
   return {
     token: state.global.token,
+    role: state.global.userInfo.role,
   }
 }
 

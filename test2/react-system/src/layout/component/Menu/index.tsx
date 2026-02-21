@@ -80,7 +80,6 @@ interface LayoutMenuProps {
 
 const LayoutMenu = (props: LayoutMenuProps) => {
   const { role, setAuthRouter } = props
-  console.log('菜单页面获取的role', role)
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -164,6 +163,7 @@ const LayoutMenu = (props: LayoutMenuProps) => {
   }
 
   // 点击菜单跳转
+  //这里 点击主菜单也应该跳转吧
   const clickMenu: MenuProps['onClick'] = ({ key }) => {
     navigate(key)
   }
@@ -178,6 +178,8 @@ const LayoutMenu = (props: LayoutMenuProps) => {
           items={menuList}
           openKeys={openKeys}
           selectedKeys={selectedKeys}
+          // 点击主菜单就会把子菜单展开 而不是跳转主页面的功能是不是要在这改呢
+          //改完之后怎么展开子菜单呢 只点旁边的小三角不行么
           onOpenChange={onOpenChange}
           onClick={clickMenu}
         />
@@ -188,7 +190,7 @@ const LayoutMenu = (props: LayoutMenuProps) => {
 
 const mapDispathToProps = { setAuthRouter }
 const mapStateToProps = (state: any) => ({
-  role: state.global.userInfo.role
+  role: state.global.userInfo?.role || ''
 })
 
 export default connect(mapStateToProps, mapDispathToProps)(LayoutMenu)

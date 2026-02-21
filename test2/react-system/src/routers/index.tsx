@@ -7,12 +7,13 @@ import NoPermission from '@/views/errorPage/403'
 import NoFound from '@/views/errorPage/404'
 import { LayoutIndex } from "./constant";
 import Login from "@/views/Login";
-import Register from "@/views/Register";
+import Register from "@/views/register/index";
 
 
 
 //导入modules文件夹下的路由文件
-const metaRouters = import.meta.glob('./modules/*.tsx', { eager: true })
+const metaRouters = import.meta.glob('./modules/**/*.tsx', { eager: true })
+console.log('1导入文件夹下的路由文件', metaRouters)
 //处理路由
 const routerArray = [];
 Object.keys(metaRouters).forEach(item => {
@@ -87,7 +88,7 @@ const Router = () => {
   // console.log('当前的url routes', routes);
   return routes
 }
-
+console.log('1导出的路由列表', routerArray)
 //导出这个组件
 export default Router
 export { routerArray }

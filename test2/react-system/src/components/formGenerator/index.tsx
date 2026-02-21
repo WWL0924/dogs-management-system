@@ -1,33 +1,33 @@
-import { Button, Form, Input, Select, Space } from "antd"
+import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from "antd"
 import { forwardRef } from "react"
 
 interface FormGeneratorProps {
   config: FormConfigItem[],
-  onFinish?: (values: any) => void,
-  onReset?: () => void,
   values?: any,
   ref?: any,
-  isDialog?: boolean,
+  //是否有按钮
+  isBtn?: boolean,
   //按钮字段
   confirmText?: string,
-  resetText?: string,
+  //按钮功能
+  handelBtn?: (values: any) => void,
 }
 
 //React.FC函数组件类型
 //props 的类型是 FormGeneratorProps
 const SearchForm: React.FC<FormGeneratorProps> = forwardRef(({
+  //配置数组
   config,
-  onFinish,
-  onReset,
   //默认值
   values,
-  isDialog = true,
+  //是否有按钮功能
+  isBtn = false,
   //按钮字段
-  confirmText = '查询',
-  resetText = '重置',
-
-  //这里ref的放在这里是什么意思
+  confirmText,
+  //按钮功能
+  handelBtn
 }, ref) => {
+
   const renderFormItem = (item: FormConfigItem) => {
     switch (item.type) {
       case 'input':
@@ -43,32 +43,41 @@ const SearchForm: React.FC<FormGeneratorProps> = forwardRef(({
             ))}
           </Select>
         )
+      case 'checkbox':
+        return (
+          <Checkbox.Group options={item.options} />
+        )
+      case 'datepicker':
+        return (
+          <DatePicker placeholder={item.placeholder} />
+        )
     }
   }
   return (
     <>
       <Form
-        className="layout_form"
+        className='formGenerator'
         ref={ref}
-        onFinish={onFinish}
-        onReset={onReset}
       >
         {
           // 父组件作为props传入config
           config.map((item) => ( //直接return
-            <Form.Item key={item.name} label={item.label} name={item.name}>
+            <Form.Item
+              key={item.name} label={item.label} name={item.name}
+              //必填项
+              rules={[{ required: true, message: '请输入' + item.label }]}
+            >
               {renderFormItem(item)}
             </Form.Item>
+
           ))
         }
         {/* 添加查询按钮 */}
-        {isDialog && (
+        {isBtn && (
           <Form.Item>
             <Space>
               {/* 查询 提交之后自动调用onFinish*/}
-              <Button type="primary" htmlType="submit">{confirmText}</Button>
-              {/* 重置 重置表单字段之后自动调用onReset*/}
-              <Button htmlType="reset">{resetText}</Button>
+              <Button type="primary" onClick={handelBtn}>{confirmText}</Button>
             </Space>
           </Form.Item>
         )}

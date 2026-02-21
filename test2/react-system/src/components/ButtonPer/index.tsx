@@ -12,6 +12,7 @@ interface ButtonPerProps {
 const ButtonPer = ({ btn, Comp }: ButtonPerProps): JSX.Element | null => {
   //拿到当前页面允许的按钮
   const { BUTTONS } = useAuthButtons()
+  console.log('当前页面允许的按钮', BUTTONS)
   //这个按钮不需要权限控制
   if (!btn) {
     return <>{Comp}</>
