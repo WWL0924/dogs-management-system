@@ -41,7 +41,7 @@ const Details = (props: any) => {
       if (formData.record) {
         formData.record = dayjs(formData.record) //日期
         formData.sex = formData.sex === '女' ? '雌性' : '雄性' //性别
-        formData.vaccine = [formData.vaccine] // Checkbox Group 必须接受数组，如 [true] 或 [false]
+        // formData.vaccine = formData.vaccine === true ? '是' : '否' //疫苗
       }
       form.current.setFieldsValue(formData)
     })
@@ -82,6 +82,15 @@ const Details = (props: any) => {
     {
       title: '是否接种疫苗', dataIndex: 'vaccine', key: 'vaccine'
       , render: (text: boolean) => text ? '是' : '否'
+    },
+    {
+      title: '信息状态', dataIndex: 'status', key: 'status'
+      , render: (text) => {
+        if (text === 0) { return '待审核' }
+        else if (text === 1) { return '已通过' }
+        else if (text === 2) { return '已拒绝' }
+        else { return '未知状态' }
+      }
     },
     {
       title: '操作',

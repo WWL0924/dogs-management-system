@@ -93,10 +93,9 @@ function Home(props: any) {
         headers: {
           'Content-Type': 'application/json' // 告诉后端发的是 JSON
         },
-        body: JSON.stringify(values) // 把对象转成 JSON 字符串
+        body: JSON.stringify({ ...values, status: 0 }) // 把对象转成 JSON 字符串
       });
       // 3. 后续操作
-      console.log('handleOk方法提交的数据', values);
       setVisible(false); // 关弹窗
       fetchData(); // 刷新列表 (去拿最新数据)
 
@@ -116,6 +115,15 @@ function Home(props: any) {
     {
       title: '是否接种疫苗', dataIndex: 'vaccine', key: 'vaccine'
       , render: (text) => text ? '是' : '否'
+    },
+    {
+      title: '信息状态', dataIndex: 'status', key: 'status'
+      , render: (text) => {
+        if (text === 0) { return '待审核' }
+        else if (text === 1) { return '已通过' }
+        else if (text === 2) { return '已拒绝' }
+        else { return '未知状态' }
+      }
     },
   ]
   return (

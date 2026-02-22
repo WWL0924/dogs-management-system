@@ -1,4 +1,4 @@
-import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from "antd"
+import { Button, Checkbox, DatePicker, Form, Input, Radio, Select, Space } from "antd"
 import { forwardRef, useImperativeHandle } from "react"
 
 interface FormGeneratorProps {
@@ -51,6 +51,10 @@ const SearchForm = forwardRef<any, FormGeneratorProps>(({
       case 'checkbox':
         return (
           <Checkbox.Group options={item.options} disabled={item.disabled} />
+        )
+      case 'radio':
+        return (
+          <Radio.Group options={item.options} disabled={item.disabled} />
         )
       case 'datepicker':
         return (

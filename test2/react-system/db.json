@@ -5,14 +5,13 @@
       "breed": "柴犬",
       "sex": "雄性",
       "age": "3",
-      "vaccine": [
-        true
-      ],
+      "vaccine": true,
       "record": "2025-07-31T16:00:00.000Z",
       "masterName": "张三",
       "phone": "13800000000",
       "number": "001",
-      "id": "5fa3"
+      "id": "5fa3",
+      "status": 0
     },
     {
       "name": "小b",
@@ -24,7 +23,8 @@
       "masterName": "张三",
       "phone": "13800000000",
       "number": "002",
-      "id": "0c54"
+      "id": "0c54",
+      "status": 1
     },
     {
       "id": "0090",
@@ -36,21 +36,21 @@
       "record": "2025-08-01",
       "masterName": "李四",
       "phone": "13800000000",
-      "number": "003"
+      "number": "003",
+      "status": 1
     },
     {
       "name": "大金",
       "breed": "金毛",
       "sex": "雄性",
       "age": "2",
-      "vaccine": [
-        true
-      ],
+      "vaccine": true,
       "record": "2026-02-02T16:00:00.000Z",
       "masterName": "张三",
       "phone": "12345678",
       "number": "123456",
-      "id": "a2a0"
+      "id": "a2a0",
+      "status": 1
     },
     {
       "id": "fe67",
@@ -58,13 +58,37 @@
       "breed": "中华田园犬",
       "sex": "雌性",
       "age": "1",
-      "vaccine": [
-        true
-      ],
+      "vaccine": true,
       "record": "2026-02-20T16:00:00.000Z",
       "masterName": "张三",
       "phone": "12345678",
-      "number": "002"
+      "number": "002",
+      "status": 1
+    },
+    {
+      "id": "bb5d",
+      "name": "测试审核状态",
+      "breed": "金毛",
+      "sex": "雌性",
+      "age": "2",
+      "vaccine": false,
+      "record": "2026-02-20T16:00:00.000Z",
+      "masterName": "张三",
+      "phone": "12345678",
+      "number": "001",
+      "status": 0
+    },
+    {
+      "name": "改名的旺旺",
+      "breed": "金毛",
+      "sex": "雄性",
+      "age": "2",
+      "vaccine": true,
+      "record": "2026-02-20T16:00:00.000Z",
+      "masterName": "张三",
+      "phone": "12345678",
+      "number": "005",
+      "id": "9ef6"
     }
   ],
   "resident": [
@@ -138,6 +162,20 @@
       "time": "2025-09-01",
       "name": "王五",
       "status": true
+    },
+    {
+      "id": "0d00",
+      "content": "111",
+      "time": "2026-02-21",
+      "name": "张三",
+      "status": false
+    },
+    {
+      "id": "b2f7",
+      "content": "王五不捡屎22",
+      "time": "2026-02-23",
+      "name": "张三",
+      "status": false
     }
   ]
 }

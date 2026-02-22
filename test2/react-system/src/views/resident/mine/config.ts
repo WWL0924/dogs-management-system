@@ -36,7 +36,7 @@ export const mineConfig = [
   {
     label: '是否接种疫苗',
     name: 'vaccine',
-    type: 'checkbox',
+    type: 'radio',
     options: [
       { label: '是', value: true },
       { label: '否', value: false }]

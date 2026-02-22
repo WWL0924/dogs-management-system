@@ -4,6 +4,7 @@ import complainConfig from "./config"
 import FormGenerator from "@/components/formGenerator"
 import { useRef } from "react"
 import { connect } from 'react-redux';
+import dayjs from "dayjs";
 
 //投诉与举报：遛狗不牵绳、不清理粪便等
 const Complain = (props: any) => {
@@ -36,7 +37,11 @@ const Complain = (props: any) => {
   //弹窗里的ok
   const handleOk = () => {
     form.current.validateFields().then((values: any) => {
-      console.log('#新增投诉表单数据', values)
+      // 处理时间格式
+      if (values.time) {
+        values.time = dayjs(values.time).format('YYYY-MM-DD')
+      }
+      console.log('#投诉表单的时间', values.time)
       setVisible(false)
       // 提交数据到后端 这里还包括添加用户姓名和状态
       fetch('http://localhost:4000/complain', {
