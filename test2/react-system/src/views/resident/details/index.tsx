@@ -26,14 +26,7 @@ const Details = (props: any) => {
     fetchData()
   }, [])
 
-  // //获取这一行的数据
-  // const getData = async () => {
-  //   const res = await fetch(`http://localhost:4000/dogs`)
-  //   const result = await res.json()
-  //   const data = result.find((item: any) => item.id === currentId)
-  //   console.log('#getdata这一行的数据', data)
-  //   return data
-  // }
+
 
   //点击编辑
   const handelEdit = async (record: any) => {

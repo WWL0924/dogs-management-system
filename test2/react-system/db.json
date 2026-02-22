@@ -51,6 +51,20 @@
       "phone": "12345678",
       "number": "123456",
       "id": "a2a0"
+    },
+    {
+      "id": "fe67",
+      "name": "旺财",
+      "breed": "中华田园犬",
+      "sex": "雌性",
+      "age": "1",
+      "vaccine": [
+        true
+      ],
+      "record": "2026-02-20T16:00:00.000Z",
+      "masterName": "张三",
+      "phone": "12345678",
+      "number": "002"
     }
   ],
   "resident": [
@@ -87,6 +101,43 @@
       "password": "123456",
       "role": "admin",
       "name": "wwl"
+    }
+  ],
+  "complain": [
+    {
+      "id": "0001",
+      "content": "李四遛狗不牵绳",
+      "time": "2025-08-01",
+      "name": "张三",
+      "status": false
+    },
+    {
+      "id": "0002",
+      "content": "王五遛狗不牵绳",
+      "time": "2025-09-01",
+      "name": "张三",
+      "status": true
+    },
+    {
+      "id": "0003",
+      "content": "王五遛狗不牵绳",
+      "time": "2025-09-01",
+      "name": "李四",
+      "status": true
+    },
+    {
+      "id": "0004",
+      "content": "王五遛狗不牵绳",
+      "time": "2025-09-01",
+      "name": "李四",
+      "status": true
+    },
+    {
+      "id": "0005",
+      "content": "王五遛狗不牵绳",
+      "time": "2025-09-01",
+      "name": "王五",
+      "status": true
     }
   ]
 }

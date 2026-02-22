@@ -72,14 +72,17 @@ function Home(props: any) {
   //新增功能
   const handleAdd = () => {
     setVisible(true)
-    setTimeout(() => {
-      // 使用可选链防止报错
-      form.current?.setFieldsValue({
-        masterName: name,
-      })
-    })
   }
 
+  // 监听 visible 变化，当弹窗打开时自动赋值
+  useEffect(() => {
+    if (visible && form.current) {
+      // 这里甚至不需要 setTimeout，因为 useEffect 执行时 DOM 已经更新
+      form.current.setFieldsValue({
+        masterName: name,
+      })
+    }
+  }, [visible, name]) // 依赖 visible 和 name
   const handleOk = () => {
     // 1. 校验表单
     form.current.validateFields().then(async (values) => {
