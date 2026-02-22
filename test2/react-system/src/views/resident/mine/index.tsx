@@ -42,7 +42,10 @@ function Home(props: any) {
   //查询功能
   const handleSearch = (values: any) => {
     console.log('点击查询按钮表单值', values)
-    if (values) {
+    if (!values) {
+      setTableData(tableData)
+    }
+    else {
       //根据查询条件筛选数据
       const filteredData = mineData.filter((item) => {
         return (
@@ -54,11 +57,7 @@ function Home(props: any) {
       console.log('筛选后的数据', filteredData)
       setTableData(filteredData)
       console.log('筛选后的数据', tableData)
-    }
-    //没有数据 点击自动渲染
-    //这里怎么在清空之后 显示之前的所有数据
-    else {
-      setTableData(tableData)
+
     }
 
 

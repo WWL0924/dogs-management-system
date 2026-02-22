@@ -3,18 +3,17 @@ import lazyLoad from "../../utils/lazyLoad";
 import LayoutIndex from "@/layout/index";
 
 
-
-const Manage = [
+const Review = [
   {
     element: <LayoutIndex />,
     children: [
       {
-        path: '/admin/manage',
+        path: '/admin/all',
         // 副菜单
-        element: lazyLoad(React.lazy(() => import('@/views/admin/manage/index'))),
+        element: lazyLoad(React.lazy(() => import('@/views/admin/all/index'))),
         meta: {
-          title: '登记审核',
-          key: '/admin/manage',
+          title: '犬只总览',
+          key: '/admin/all',
 
         }
       }
@@ -25,4 +24,4 @@ const Manage = [
 
 ]
 
-export default Manage
+export default Review 

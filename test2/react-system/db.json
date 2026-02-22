@@ -88,7 +88,8 @@
       "masterName": "张三",
       "phone": "12345678",
       "number": "005",
-      "id": "9ef6"
+      "id": "9ef6",
+      "status": 0
     }
   ],
   "resident": [
@@ -114,17 +115,18 @@
   ],
   "admin": [
     {
+      "id": "bbe4",
       "name": "管理员1",
       "account": "admin",
       "password": "123456",
-      "id": "bbe4"
+      "role": "admin"
     },
     {
       "id": "d1a3",
-      "account": "wwl",
+      "name": "管理员2",
+      "account": "admin",
       "password": "123456",
-      "role": "admin",
-      "name": "wwl"
+      "role": "admin"
     }
   ],
   "complain": [

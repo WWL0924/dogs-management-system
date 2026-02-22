@@ -114,8 +114,8 @@ const LayoutMenu = (props: LayoutMenuProps) => {
             icon: 'SettingOutlined',
             children: [
               { path: '/admin/todo', label: '待办统计', icon: 'ProfileOutlined' },
-              { path: '/admin/review', label: '登记审核', icon: 'AuditOutlined' },
-              { path: '/admin/manage', label: '犬只管理', icon: 'DatabaseOutlined' },
+              { path: '/admin/all', label: '犬只总览', icon: 'AuditOutlined' },
+              { path: '/admin/manage', label: '登记审核', icon: 'DatabaseOutlined' },
               { path: '/admin/deal', label: '投诉处理', icon: 'AlertOutlined' },
             ]
           }
