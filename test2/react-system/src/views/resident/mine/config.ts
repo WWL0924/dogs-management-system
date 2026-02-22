@@ -65,7 +65,7 @@ export const mineConfig = [
   //证件信息
   {
     label: '犬证编号',
-    name: 'num',
+    name: 'number',
     type: 'input',
     placeholder: '请输入犬证编号'
   },

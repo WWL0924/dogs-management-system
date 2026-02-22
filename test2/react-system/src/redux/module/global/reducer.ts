@@ -15,7 +15,8 @@ const globalState: GlobalState = {
   token: '',
   userInfo: {
     role: 'resident',
-    username: ''
+    account: '',
+    name: ''
   }
 
 }

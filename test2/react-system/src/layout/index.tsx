@@ -38,7 +38,10 @@ const LayoutIndex = (props: any) => {
       </Sider>
       <Layout>
         <Layout.Header>
-          header
+          {/* 显示用户名 */}
+          <div style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+            欢迎，{props.name}
+          </div>
         </Layout.Header>
         <Layout.Content>
           {/* 子路由的占位符 home组件会渲染到这个位置 */}
@@ -59,6 +62,7 @@ const mapStateToProps = (state: any) => {
   return {
     token: state.global.token,
     role: state.global.userInfo.role,
+    name: state.global.userInfo.name
   }
 }
 

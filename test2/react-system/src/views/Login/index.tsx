@@ -39,10 +39,12 @@ const Login = (props: LoginProps) => {
     }
     //判断账号密码是否匹配
     const user = await roleData().then((data: any) => data.find((item: any) => item.account === account && item.password === password))
-    console.log('账号密码是否匹配', user)
+
+    console.log('相应数据的用户名存入store', user.name)
     if (user) {
+      const name = user.name
       //存入store
-      setUserInfo({ role, account })
+      setUserInfo({ role, account, name })
       //路由守卫
       setToken('login')
     } else {

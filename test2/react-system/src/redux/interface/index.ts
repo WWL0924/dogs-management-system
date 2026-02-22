@@ -13,4 +13,5 @@ export interface AuthState {
 export interface UserInfo {
   role: 'resident' | 'admin',
   account: string,
+  name: string
 }

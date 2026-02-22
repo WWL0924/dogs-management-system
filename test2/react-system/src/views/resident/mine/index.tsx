@@ -1,9 +1,8 @@
-import ButtonPer from "@/components/ButtonPer";
+
 import { Button, Form, Input, Modal, Table } from "antd";
 import { mineConfig } from './config'
 import FormGenerator from "@/components/formGenerator";
 import { useEffect, useRef, useState } from "react";
-import type { access } from "fs";
 import { connect } from "react-redux";
 
 
@@ -13,35 +12,17 @@ function Home(props: any) {
   //页面数据
   const [mineData, setMineData] = useState([])
   //获取当前登录的用户账号
-  const { account } = props
-  console.log('当前登录的账号', account)
-  //当前登录的用户名
-  const [userName, setUserName] = useState('用户')
+  const { name } = props
+  console.log('当前登录的用户账号', name)
 
-  //根据accout 获取相应的name
-  const fetchName = async () => {
-    try {
-      const res = await fetch('http://localhost:4000/resident')
-      const data = await res.json()
-      console.log('从mock中获取的用户信息', data)
-      const name = data.find((item: any) => item.account === account)?.name || '用户'
-      console.log('从mock中获取的用户名', name)
-      return name
-    }
-    catch (error) {
-      console.log('从mock中获取用户名失败', error)
-    }
-  }
 
   //从mock获取数据并且更新data
-  const fetchData = async (name: string) => {
+  const fetchData = async () => {
     try {
       const res = await fetch('http://localhost:4000/dogs')
       const result = await res.json()
-      const targetName = name || userName
-
-      const data = result.filter((item: any) => item.masterName === targetName)
-      console.log('fetchDate方法从mock获取的相应用户的犬只', result)
+      const data = result.filter((item: any) => item.masterName === name)
+      console.log('从mock中获取的相应用户的犬只', data)
       setMineData(data)
       setTableData(data)
     }
@@ -52,15 +33,10 @@ function Home(props: any) {
 
   //渲染完毕后获取数据?
   useEffect(() => {
-    //等名字拿到之后再存入
-    const init = async () => {
-      const name = await fetchName()
-      console.log('从mock中获取的用户名', name)
-      setUserName(name)//这里是异步的 稍后执行
-      fetchData(name)
+    if (name) {
+      fetchData()
     }
-    init()
-  }, [])
+  }, [name])
 
 
   //查询功能
@@ -91,23 +67,15 @@ function Home(props: any) {
   //弹窗是否可见
   const [visible, setVisible] = useState(false)
   const form = useRef(null)
-  // const mapFormValues = (values: any) => {
-  //   return {
-  //     key: mineData.length + 1,
-  //     name: values.name,
-  //     breed: values.breed,
-  //     sex: values.sex,
-  //     age: values.age,
-  //     vaccine: values.vaccine,
-  //   }
-  // }
+
+
   //新增功能
   const handleAdd = () => {
     setVisible(true)
     setTimeout(() => {
       // 使用可选链防止报错
       form.current?.setFieldsValue({
-        masterName: userName,
+        masterName: name,
       })
     })
   }
@@ -188,7 +156,7 @@ function Home(props: any) {
 }
 const mapStateToProps = (state: any) => {
   return {
-    account: state.global.userInfo?.account || '' // 必须取出 account
+    name: state.global.userInfo?.name || '' // 必须取出 name
   }
 }
 //返回可以直接通过props调用dispatch的组件

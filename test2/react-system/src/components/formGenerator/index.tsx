@@ -1,5 +1,5 @@
 import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from "antd"
-import { forwardRef } from "react"
+import { forwardRef, useImperativeHandle } from "react"
 
 interface FormGeneratorProps {
   config: FormConfigItem[],
@@ -11,14 +11,13 @@ interface FormGeneratorProps {
   confirmText?: string,
   //按钮功能
   handelBtn?: (values: any) => void,
-  //是否可变
-  disabled?: boolean,
+
 
 }
 
 //React.FC函数组件类型
 //props 的类型是 FormGeneratorProps
-const SearchForm: React.FC<FormGeneratorProps> = forwardRef(({
+const SearchForm = forwardRef<any, FormGeneratorProps>(({
   //配置数组
   config,
   //默认值
@@ -31,7 +30,7 @@ const SearchForm: React.FC<FormGeneratorProps> = forwardRef(({
   handelBtn,
   //是否可变
   //这里不是 默认true么 config里面特地写的是不可变的
-  disabled = true,
+
 }, ref) => {
 
   const renderFormItem = (item: FormConfigItem) => {
