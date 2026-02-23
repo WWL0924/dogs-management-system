@@ -34,6 +34,7 @@ declare interface FormConfigItem {
   type: 'input' | 'radio' | 'select' | 'checkbox' | 'datepicker',
   options?: { label: string, value: any }[],
   placeholder?: string,
+  required?: boolean,
   render?: (value: any) => any,
   options?: { label: string, value: any }[],
   disabled?: boolean,

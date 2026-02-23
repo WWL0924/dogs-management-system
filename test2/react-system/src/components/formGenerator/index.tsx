@@ -11,6 +11,9 @@ interface FormGeneratorProps {
   confirmText?: string,
   //按钮功能
   handelBtn?: (values: any) => void,
+  //是否必填
+  isrequired?: boolean,
+
 
 
 }
@@ -28,8 +31,8 @@ const SearchForm = forwardRef<any, FormGeneratorProps>(({
   confirmText,
   //按钮功能
   handelBtn,
-  //是否可变
-  //这里不是 默认true么 config里面特地写的是不可变的
+  //是否必填  
+  isrequired = true,
 
 }, ref) => {
 
@@ -74,7 +77,7 @@ const SearchForm = forwardRef<any, FormGeneratorProps>(({
             <Form.Item
               key={item.name} label={item.label} name={item.name}
               //必填项
-              rules={[{ required: true, message: '请输入' + item.label }]}
+              rules={[{ required: isrequired, message: '请输入' + item.label }]}
             >
               {renderFormItem(item)}
             </Form.Item>

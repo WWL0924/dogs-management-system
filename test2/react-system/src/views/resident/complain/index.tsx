@@ -52,7 +52,7 @@ const Complain = (props: any) => {
         body: JSON.stringify({
           ...values,
           name: name,
-          status: false
+          status: 0
         }),
       }).then(res => res.json()).then(data => {
         console.log('#新增投诉', data)
@@ -85,12 +85,22 @@ const Complain = (props: any) => {
     { title: '投诉人', dataIndex: 'name', key: 'name' },
     {
       title: '处理状态', dataIndex: 'status', key: 'status',
-      render: (status: boolean) => (status ? '已处理' : '未处理'),
+      render: (status: number) => {
+        if (status === 0) {
+          return '未处理'
+        } else if (status === 1) {
+          return '已处理'
+        } else if (status === 2) {
+          return '已驳回'
+        } else {
+          return '未知状态'
+        }
+      },
     },
     {
       title: '操作', dataIndex: 'operation', key: 'operation',
-      render: (status: boolean, record: any) => {
-        if (record.status) {
+      render: (status: number, record: any) => {
+        if (status === 1) {
           return null
         } else {
           return (

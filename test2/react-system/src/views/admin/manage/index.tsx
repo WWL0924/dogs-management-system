@@ -90,7 +90,7 @@ const Manage = () => {
 
     try {
       // 发送请求更新数据
-      const res = await fetch(`http://localhost:4000/dogs/${currentId}`, {
+      const res = await fetch(`http://localhost:4000/dogs/${values.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -106,6 +106,11 @@ const Manage = () => {
     } catch (error) {
       console.error('更新数据失败:', error);
     }
+  }
+
+  //关闭弹窗
+  const handleClose = () => {
+    setVisible(false)
   }
 
 
@@ -134,18 +139,23 @@ const Manage = () => {
       <Table dataSource={manageData} columns={columns} ></Table>
 
       <Modal
-        forceRender={true}
-        title="编辑犬只"
+        title="投诉详情"
         open={visible}
         // 这里的按钮是弹窗自带的
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="审核通过"
-        cancelText="驳回"
+        onCancel={handleClose}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            审核不通过
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleOk}>
+            审核通过
+          </Button>,
+        ]}
       >
         <FormGenerator
           // 这里config要变成所有内容不可变
           config={manageConfig}
+          isrequired={false}
           //父组件可以访问子组件实例
           ref={form}
           isBtn={false}
