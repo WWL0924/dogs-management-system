@@ -1,6 +1,7 @@
 {
   "dogs": [
     {
+      "status": 1,
       "name": "大柴",
       "breed": "柴犬",
       "sex": "雄性",
@@ -10,34 +11,33 @@
       "masterName": "张三",
       "phone": "13800000000",
       "number": "001",
-      "id": "5fa3",
-      "status": 0
+      "id": "5fa3"
     },
     {
+      "status": 2,
       "name": "小b",
       "breed": "金毛",
-      "sex": "雌性",
+      "sex": "雄性",
       "age": "3",
       "vaccine": true,
-      "record": "2025-08-01",
+      "record": "2025-07-31T16:00:00.000Z",
       "masterName": "张三",
       "phone": "13800000000",
       "number": "002",
-      "id": "0c54",
-      "status": 1
+      "id": "0c54"
     },
     {
-      "id": "0090",
+      "status": 1,
       "name": "小c",
       "breed": "柴犬",
-      "sex": " 雄性",
+      "sex": "雄性",
       "age": "3",
       "vaccine": true,
-      "record": "2025-08-01",
+      "record": "2025-07-31T16:00:00.000Z",
       "masterName": "李四",
       "phone": "13800000000",
       "number": "003",
-      "status": 1
+      "id": "0090"
     },
     {
       "name": "大金",
@@ -66,20 +66,21 @@
       "status": 1
     },
     {
-      "id": "bb5d",
-      "name": "测试审核状态",
+      "status": 2,
+      "name": "测试",
       "breed": "金毛",
-      "sex": "雌性",
+      "sex": "雄性",
       "age": "2",
       "vaccine": false,
       "record": "2026-02-20T16:00:00.000Z",
       "masterName": "张三",
       "phone": "12345678",
       "number": "001",
-      "status": 0
+      "id": "bb5d"
     },
     {
-      "name": "改名的旺旺",
+      "status": 1,
+      "name": "待审核的旺旺",
       "breed": "金毛",
       "sex": "雄性",
       "age": "2",
@@ -88,8 +89,20 @@
       "masterName": "张三",
       "phone": "12345678",
       "number": "005",
-      "id": "9ef6",
-      "status": 0
+      "id": "9ef6"
+    },
+    {
+      "status": 0,
+      "name": "待审核的旺旺",
+      "breed": "金毛",
+      "sex": "雄性",
+      "age": "2",
+      "vaccine": true,
+      "record": "2026-02-20T16:00:00.000Z",
+      "masterName": "张三",
+      "phone": "12345678",
+      "number": "005",
+      "id": "9ef6"
     }
   ],
   "resident": [
