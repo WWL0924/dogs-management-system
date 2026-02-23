@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  min-width: 950px;
+  height: 100vh;
+  background-color: var(--bg-color);
+
+  /* 侧边栏样式优化 */
+  .ant-layout-sider {
+    /* 使用 Ant Design 的默认深色背景，但在 ConfigProvider 中已配置 */
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    z-index: 100;
+  }
+
+  .ant-layout-sider-trigger {
+    /* 侧边栏收起按钮 */
+    position: fixed;
+    bottom: 0;
+    z-index: 101;
+    height: 48px;
+    line-height: 48px;
+    color: var(--text-color);
+    background-color: #fff;
+    border-top: 1px solid #f0f0f0;
+    /* 浅色背景 */
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #fff;
+      background-color: var(--primary-color);
+      /* 使用主题色 */
+    }
+  }
+
+  /* 主体布局区域 */
+  .ant-layout {
+    overflow: hidden;
+    background-color: var(--bg-color);
+    /* 浅灰背景 */
+
+    /* 顶部导航栏 */
+    .site-layout-header {
+      padding: 0 24px;
+      background: var(--component-bg);
+      /* 白色背景 */
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      /* 用户信息靠右 */
+      height: var(--header-height);
+      line-height: var(--header-height);
+
+      .header-user-info {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: color 0.3s;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+    }
+
+    /* 内容区域 */
+    .site-layout-content {
+      flex: 1;
+      /* margin: 24px; */
+      /* padding: 24px; */
+      /* background: var(--component-bg); */
+      /* border-radius: var(--border-radius); */
+      /* box-shadow: var(--box-shadow); */
+      background: transparent;
+      overflow-y: auto;
+
+      /* 美化滚动条 */
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+      }
+    }
+
+    /* 底部版权信息 */
+    .ant-layout-footer {
+      padding: 0 0 24px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+  }
+}

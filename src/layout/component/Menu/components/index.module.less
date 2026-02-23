@@ -1,0 +1,21 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  margin-bottom: 8px;
+  /* 增加微妙的背景区分 */
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+
+  .logo_img {
+    width: 36px;
+    margin: 0;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+
+    &:hover {
+      transform: rotate(360deg);
+    }
+  }
+}
