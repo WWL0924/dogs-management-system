@@ -1,0 +1,51 @@
+.admin-welcome {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e6f7ff 100%);
+  padding: 24px;
+  // min-height: calc(100vh - 64px); 
+
+  .welcome-card {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 40px 20px;
+    background: #fff;
+  }
+
+  .welcome-icon {
+    font-size: 80px;
+    color: var(--primary-color);
+    margin-bottom: 32px;
+  }
+
+  .welcome-title {
+    margin-bottom: 16px !important;
+    color: var(--text-color);
+  }
+
+  .welcome-desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.8;
+  }
+
+  .action-btn {
+    padding: 0 32px;
+    height: 48px;
+    font-size: 16px;
+    margin: 0 12px;
+    border-radius: 24px;
+    box-shadow: 0 4px 10px rgba(82, 196, 26, 0.2);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(82, 196, 26, 0.3);
+    }
+  }
+}

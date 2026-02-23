@@ -32,22 +32,22 @@ const LayoutIndex = (props: any) => {
 
   return (
     <div className="container">
-      <Sider collapsible width={220} theme="dark" >
+      <Sider collapsible width={220} theme="light" >
         {/* 这里根据role来显示不同的菜单 */}
         <LayoutMenu role={role} />
       </Sider>
       <Layout>
-        <Layout.Header>
+        <Layout.Header className="site-layout-header">
           {/* 显示用户名 */}
-          <div style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+          <div className="header-user-info">
             欢迎，{props.name}
           </div>
         </Layout.Header>
-        <Layout.Content>
+        <Layout.Content className="site-layout-content">
           {/* 子路由的占位符 home组件会渲染到这个位置 */}
           <Outlet />
         </Layout.Content>
-        <Layout.Footer style={{ textAlign: 'center' }}>
+        <Layout.Footer className="text-center">
           {new Date().getFullYear()}幸福社区宠物狗管理系统 By 武文靓
         </Layout.Footer>
       </Layout>

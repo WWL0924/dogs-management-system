@@ -18,6 +18,8 @@ interface LoginProps {
 }
 
 
+import './index.less'
+
 const Login = (props: LoginProps) => {
   //从props取出setToken方法
   const { setToken, setUserInfo, token, role } = props
@@ -78,24 +80,10 @@ const Login = (props: LoginProps) => {
 
 
   return (
-    <div style={{
-      width: '100%',
-      minHeight: '100vh',
-      background: 'linear-gradient(180deg, #f6ffed 0%, #d9f7be 100%)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <Card
-        style={{
-          width: 400,
-          borderRadius: '16px',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
-          padding: '20px'
-        }}
-      >
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Title level={2} style={{ color: '#52c41a', marginBottom: '8px' }}>幸福社区</Title>
+    <div className="login-container">
+      <Card className="login-card" bordered={false}>
+        <div className="login-header">
+          <Title level={2}>幸福社区</Title>
           <Text type="secondary">宠物狗管理系统</Text>
         </div>
 
@@ -104,20 +92,20 @@ const Login = (props: LoginProps) => {
             name="account"
             rules={[{ required: true, message: '请输入账号' }]}
           >
-            <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="账号" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="账号" />
           </Form.Item>
 
           <Form.Item
             name="password"
             rules={[{ required: true, message: '请输入密码' }]}
           >
-            <Input.Password prefix={<LockOutlined style={{ color: '#bfbfbf' }} />} placeholder="密码" />
+            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="密码" />
           </Form.Item>
           <Form.Item
             name="role"
             rules={[{ required: true, message: '请选择身份' }]}
           >
-            <Select style={{ width: '100%' }} placeholder="选择身份" options={[
+            <Select placeholder="选择身份" options={[
               {
                 label: '用户',
                 value: 'resident',
@@ -129,8 +117,8 @@ const Login = (props: LoginProps) => {
             ]}
             />
           </Form.Item>
-          <Form.Item style={{ marginTop: '32px' }}>
-            <Space direction="vertical" style={{ width: '100%' }} size="middle">
+          <Form.Item className="form-actions">
+            <Space direction="vertical" size="middle">
               <Button type="primary" block htmlType="submit">
                 登录
               </Button>

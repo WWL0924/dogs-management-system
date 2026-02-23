@@ -1,4 +1,4 @@
-import { Button, Input, Card, Form, Typography, Space, Select } from "antd";
+import { Button, Input, Card, Form, Typography, Space, Select, message } from "antd";
 import { setToken } from "@/redux/module/global/action";
 //返回包装后的组件
 import { connect } from "react-redux";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 //下拉菜单
 import { Dropdown } from 'antd';
+import '../Login/index.less' // 复用登录页样式
 
 const { Title, Text } = Typography;
 
@@ -48,25 +49,11 @@ const Register = () => {
   }
 
   return (
-    <div style={{
-      width: '100%',
-      minHeight: '100vh',
-      background: 'linear-gradient(180deg, #f6ffed 0%, #d9f7be 100%)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <Card
-        style={{
-          width: 400,
-          borderRadius: '16px',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
-          padding: '20px'
-        }}
-      >
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Title level={2} style={{ color: '#52c41a', marginBottom: '8px' }}>幸福社区</Title>
-          <Text type="secondary">宠物狗管理系统</Text>
+    <div className="login-container">
+      <Card className="login-card" bordered={false}>
+        <div className="login-header">
+          <Title level={2}>幸福社区</Title>
+          <Text type="secondary">用户注册</Text>
         </div>
 
         <Form layout="vertical" size="large" onFinish={handleFinish} form={form}>
@@ -74,26 +61,26 @@ const Register = () => {
             name="name"
             rules={[{ required: true, message: '请输入用户名' }]}
           >
-            <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="用户名" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
           </Form.Item>
           <Form.Item
             name="account"
             rules={[{ required: true, message: '请输入账号' }]}
           >
-            <Input prefix={<UserOutlined style={{ color: '#bfbfbf' }} />} placeholder="账号" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="账号" />
           </Form.Item>
           <Form.Item
             name="password"
             rules={[{ required: true, message: '请输入密码' }]}
           >
-            <Input.Password prefix={<LockOutlined style={{ color: '#bfbfbf' }} />} placeholder="密码" />
+            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="密码" />
           </Form.Item>
           {/* 下拉菜单选择身份 */}
           <Form.Item
             name="role"
             rules={[{ required: true, message: '请选择身份' }]}
           >
-            <Select style={{ width: '100%' }} placeholder="选择身份" options={[
+            <Select placeholder="选择身份" options={[
               {
                 label: '用户',
                 value: 'resident',
@@ -103,20 +90,21 @@ const Register = () => {
                 value: 'admin',
               },
             ]}
-              //
-              onChange={(val) => console.log(val)}
             />
           </Form.Item>
-          <Form.Item style={{ marginTop: '32px' }}>
-            <Space direction="vertical" style={{ width: '100%' }} size="middle">
-              <Button block type="primary" htmlType="submit">
-                注册账号
+          <Form.Item className="form-actions">
+            <Button type="primary" block htmlType="submit">
+              立即注册
+            </Button>
+            <div style={{ textAlign: 'center', marginTop: '16px' }}>
+              <Button type="link" onClick={() => navigate('/login')}>
+                已有账号？去登录
               </Button>
-            </Space>
+            </div>
           </Form.Item>
         </Form>
       </Card>
-    </div >
+    </div>
   )
 }
 

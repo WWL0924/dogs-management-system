@@ -135,7 +135,7 @@ const Manage = () => {
     },
   ]
   return (
-    <div>
+    <div className="page-container">
       <Table dataSource={manageData} columns={columns} ></Table>
 
       <Modal

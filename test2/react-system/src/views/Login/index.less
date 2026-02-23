@@ -1,0 +1,125 @@
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  /* 更加清新的绿色渐变背景 */
+  background: linear-gradient(135deg, #f6ffed 0%, #e8f5e9 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  /* 背景装饰 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(82, 196, 26, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(82, 196, 26, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+  }
+
+  .login-card {
+    width: 420px;
+    border-radius: 12px;
+    /* 更加柔和的卡片样式 */
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    padding: 10px; /* Card 组件本身有 padding，这里稍微加一点或者保持默认 */
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    z-index: 10;
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+      margin-top: 10px;
+
+      h2.ant-typography {
+        color: var(--primary-color) !important;
+        margin-bottom: 8px;
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+      
+      span.ant-typography-secondary {
+        font-size: 14px;
+        color: #8c8c8c;
+      }
+    }
+    
+    .ant-card-body {
+      padding: 24px 30px 30px;
+    }
+    
+    /* 图标样式 */
+    .site-form-item-icon {
+      color: rgba(0, 0, 0, 0.25);
+    }
+    
+    /* 按钮组样式 */
+    .form-actions {
+      margin-top: 32px;
+      
+      .ant-space {
+        width: 100%;
+      }
+    }
+    
+    /* 输入框样式优化 */
+    .ant-input-affix-wrapper {
+      padding: 10px 11px;
+      background-color: #f9f9f9;
+      border: 1px solid #eee;
+      
+      &:hover, &:focus, &.ant-input-affix-wrapper-focused {
+        background-color: #fff;
+      }
+    }
+    
+    /* 下拉框宽度 */
+    .ant-select {
+      width: 100%;
+    }
+
+    .ant-btn-primary {
+      height: 44px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #73d13d 0%, #52c41a 100%);
+      border: none;
+      box-shadow: 0 4px 15px rgba(82, 196, 26, 0.35);
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(82, 196, 26, 0.45);
+      }
+    }
+    
+    .ant-btn-default {
+      height: 44px;
+      font-size: 16px;
+      border-color: #d9d9d9;
+      
+      &:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+      }
+    }
+  }
+}

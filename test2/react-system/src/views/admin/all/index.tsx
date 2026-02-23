@@ -90,7 +90,7 @@ const Review = () => {
           <Button type="primary" htmlType="submit">筛选</Button>
         </Form.Item>
       </Form>
-      <Table dataSource={filteredData} columns={columns} ></Table>
+      <Table dataSource={filteredData} columns={columns} />
 
     </div>
   )

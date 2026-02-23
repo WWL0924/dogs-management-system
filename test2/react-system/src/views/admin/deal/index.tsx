@@ -123,7 +123,7 @@ const Deal = () => {
     },
   ]
   return (
-    <div>
+    <div className="page-container">
       <Table columns={columns} dataSource={dealData} />
 
 

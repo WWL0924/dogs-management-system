@@ -48,24 +48,26 @@ const Todo = () => {
   ]
   return (
     // gutter={16} 表示左右两个模块中间有 16px 的间隙
-    <Row gutter={16}>
-      {/* 左侧模块：span={12} 表示占一半宽度 */}
-      <Col span={12}>
-        <Card title='待审核犬只' bordered={false}>
-          <Table dataSource={dogData} columns={dogColumns} ></Table>
-        </Card>
-      </Col>
+    <div className="page-container">
+      <Row gutter={16}>
+        {/* 左侧模块：span={12} 表示占一半宽度 */}
+        <Col span={12}>
+          <Card title='待审核犬只' bordered={false}>
+            <Table dataSource={dogData} columns={dogColumns} ></Table>
+          </Card>
+        </Col>
 
-      {/* 右侧模块：span={12} 表示占一半宽度 */}
-      <Col span={12}>
-        <Card title='待处理投诉' bordered={false}>
-          {/* TODO: 待处理投诉列表 */}
+        {/* 右侧模块：span={12} 表示占一半宽度 */}
+        <Col span={12}>
+          <Card title='待处理投诉' bordered={false}>
+            {/* TODO: 待处理投诉列表 */}
 
-          <Table dataSource={compData} columns={compColumns} ></Table>
+            <Table dataSource={compData} columns={compColumns} ></Table>
 
-        </Card>
-      </Col>
-    </Row>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   )
 }
 

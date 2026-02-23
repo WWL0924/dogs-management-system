@@ -126,10 +126,9 @@ function Home(props: any) {
     },
   ]
   return (
-    <div>
-      <h1>我的犬只</h1>
+    <div className="page-container">
       {/* 查询*/}
-      <Form layout='inline' onFinish={handleSearch}>
+      <Form layout='inline' onFinish={handleSearch} className="search-form">
         <Form.Item name="name" label="犬名">
           <Input placeholder="请输入" />
         </Form.Item>
@@ -139,8 +138,10 @@ function Home(props: any) {
         <Form.Item>
           <Button type="primary" htmlType="submit">查询</Button>
         </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={handleAdd}>新增犬只</Button>
+        </Form.Item>
       </Form>
-      <Button type="primary" onClick={handleAdd}>新增犬只</Button>
       {/* 点击新增之后生成弹窗 */}
       <Modal
         title="新增犬只"

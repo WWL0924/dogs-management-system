@@ -173,7 +173,7 @@ const LayoutMenu = (props: LayoutMenuProps) => {
       <Logo />
       <Spin spinning={loading} tip="加载中...">
         <Menu
-          theme='dark'
+          theme='light'
           mode="inline"
           items={menuList}
           openKeys={openKeys}

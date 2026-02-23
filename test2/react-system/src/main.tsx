@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './styles/global.less' // 引入全局样式
 import App from './App.tsx'
 import { Provider } from 'react-redux'
 //store是Redux的全局状态容器

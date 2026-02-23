@@ -1,5 +1,5 @@
 //首页
-import { Button, Carousel, Card } from 'antd';
+import { Button, Carousel } from 'antd';
 import { useNavigate } from 'react-router-dom'
 // 引入图片
 import front1 from '@/assets/front1.webp'
@@ -7,22 +7,14 @@ import front2 from '@/assets/front2.jpg'
 import front3 from '@/assets/front3.webp'
 import { connect } from 'react-redux';
 import { setToken } from '@/redux/module/global/action';
-
-
-
-// 轮播图样式
-const contentStyle: React.CSSProperties = {
-  height: '400px',
-  color: '#fff',
-  lineHeight: '260px',
-  textAlign: 'center',
-  borderRadius: '8px',
-  margin: '0',
-};
+import './index.less';
+import { useEffect, useState } from 'react';
 
 //公告
 const FrontAnnouncement = (props: any) => {
   const { setToken, token } = props
+  //状态管理
+  const [num, setNum] = useState(0)
   //导航功能
   const navigate = useNavigate()
   const handelClick = () => {
@@ -37,6 +29,20 @@ const FrontAnnouncement = (props: any) => {
       navigate('/login')
     }
   }
+  //获取实际的注册犬只数量
+  const fetchNum = async () => {
+    const res = await fetch('http://localhost:4000/dogs')
+    const result = await res.json()
+    //统计数量
+    const num = result.length
+    console.log(num)
+    //更新状态
+    setNum(num)
+  }
+
+  useEffect(() => {
+    fetchNum()
+  }, [])
 
   //轮播图渲染
   const carouselItems = [
@@ -46,55 +52,43 @@ const FrontAnnouncement = (props: any) => {
     },
     {
       image: front2,
-      title: '注册犬只数量：1250',
+      title: `注册犬只数量：${num}`,
     },
     {
       image: front3,
       title: '文明遛狗，共建和谐社区',
     },
   ]
-  //轮播图样式
-  const pStyle: React.CSSProperties = {
-    backgroundSize: '100% 100%',
-    // width: '800px',
-    // aspectRatio: '3 / 2',
-    height: '400px',
-    textAlign: 'center',
-    lineHeight: '300px',
-    fontSize: '24px',
-  }
+
   return (
-    <div style={{
-      backgroundColor: '#f6ffed',
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '40px 20px'
-    }}>
-      <div style={{ width: '100%', maxWidth: '800px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} >
-        <Carousel autoplay arrows={true} style={contentStyle}>
+    <div className="front-container">
+      <div className="front-content">
+        <Carousel autoplay arrows={true} className="carousel-style">
           {carouselItems.map((item, index) => (
             <div key={index}>
-              <p style={{
-                backgroundImage: `linear-gradient( rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.2) 80%),url(${item.image})`,
-                ...pStyle,
-              }}>{item.title}</p>
+              <div
+                className="carousel-item"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(${item.image})`
+                }}
+              >
+                {item.title}
+              </div>
             </div>
           ))}
         </Carousel>
-        <div style={{ textAlign: 'center', marginTop: '30px', marginBottom: '30px' }}>
+        <div className="action-area">
           <Button
             type="primary"
             size="large"
             onClick={handelClick}
-            style={{ width: '200px', height: '45px', fontSize: '18px' }}
+            className="action-btn"
           >
             {token ? '退出登录' : '登录账号'}
           </Button>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
 

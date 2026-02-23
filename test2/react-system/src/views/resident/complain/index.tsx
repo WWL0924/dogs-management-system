@@ -99,44 +99,40 @@ const Complain = (props: any) => {
     },
     {
       title: '操作', dataIndex: 'operation', key: 'operation',
-      render: (status: number, record: any) => {
-        if (status === 1) {
+      render: (text: any, record: any) => {
+        // 如果已经处理了，就不能删除了
+        if (record.status) {
           return null
         } else {
           return (
-            <div>
-              <Button type="primary" onClick={() => handelEdit(record)}>删除</Button>
-            </div >
+            <Button type="primary" danger onClick={() => handelEdit(record)}>撤销</Button>
           )
         }
       },
     },
   ]
   return (
-
-    <div>
-      {/* 新增投诉 */}
-      <div>
+    <div className="page-container">
+      <div className="table-operations">
         <Button type="primary" onClick={handelComp}>新增投诉</Button>
       </div>
+      <Table dataSource={complainData} columns={columns} />
+
       <Modal
         title="新增投诉"
         open={visible}
         // 这里的按钮是弹窗自带的
-        onOk={handleOk}
         onCancel={() => setVisible(false)}
+        onOk={handleOk}
       >
         <FormGenerator
           config={complainConfig}
+          isrequired={true}
           //父组件可以访问子组件实例
           ref={form}
           isBtn={false}
         ></FormGenerator>
       </Modal>
-      <Table
-        columns={columns}
-        dataSource={complainData}
-      />
     </div>
   )
 }

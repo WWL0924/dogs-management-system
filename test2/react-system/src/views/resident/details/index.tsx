@@ -103,8 +103,7 @@ const Details = (props: any) => {
     }
   ]
   return (
-    <div>
-      <h2>犬只详情</h2>
+    <div className="page-container">
       {/* 列表渲染  这里面写编辑*/}
       <Table dataSource={detailData} columns={columns} rowHoverable={true}></Table>
 

@@ -1,7 +1,7 @@
 import { Collapse } from 'antd';
 const Rules = () => {
   return (
-    <div>
+    <div className="page-container">
       <Collapse defaultActiveKey={['1']}>
         <Collapse.Panel header="社区规范" key="1">
           <p>1. <strong>牵绳遛狗：</strong> 出门必须系牵引绳，大型犬需佩戴嘴套。</p>
