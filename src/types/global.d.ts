@@ -49,7 +49,7 @@ declare namespace Menu {
 declare interface FormConfigItem {
   label: string,
   name: string,
-  type: 'input' | 'radio' | 'select' | 'checkbox' | 'datepicker',
+  type: 'input' | 'radio' | 'select' | 'checkbox' | 'datepicker' | string,
   options?: { label: string, value: any }[],
   placeholder?: string,
   required?: boolean,

@@ -1,6 +1,6 @@
 import { Button, Modal, Table } from "antd"
 import { useEffect, useState } from "react"
-import complainConfig from "./config"
+import { complainConfig } from "./config"
 import FormGenerator from "@/components/formGenerator"
 import { useRef } from "react"
 import { connect } from 'react-redux';
@@ -99,7 +99,7 @@ const Complain = (props: any) => {
     },
     {
       title: '操作', dataIndex: 'operation', key: 'operation',
-      render: (text: any, record: any) => {
+      render: (_text: any, record: any) => {
         // 如果已经处理了，就不能删除了
         if (record.status) {
           return null

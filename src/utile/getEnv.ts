@@ -1,6 +1,6 @@
 
 
-export function warppEnv(envConf: Recordable): ViteEnv {
+export function warppEnv(envConf: any): any {
   const ret: any = {}
 
   for (const envName of Object.keys(envConf)) {
