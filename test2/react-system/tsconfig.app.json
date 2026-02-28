@@ -48,6 +48,6 @@
   // 不需要解析的
   "exclude": [
     "node_modules",
-    "dist",
+    "docs",
   ]
 }
