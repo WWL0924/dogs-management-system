@@ -14,7 +14,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* 把store注入到组件树内 */}
-    <Provider store={store}>
+    <Provider store={store as any}>
       {/* 从localstorage中读取初始state */}
       <PersistGate persistor={persistor}>
         <App />

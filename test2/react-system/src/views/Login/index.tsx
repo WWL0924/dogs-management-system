@@ -1,9 +1,9 @@
-import { Button, Input, Card, Form, Typography, Space, Dropdown, Select, message } from "antd";
+import { Button, Input, Card, Form, Typography, Space, Select } from "antd";
 import { setToken, setUserInfo } from "@/redux/module/global/action";
 //返回包装后的组件
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined, LockOutlined, SettingOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useEffect } from "react";
 
 const { Title, Text } = Typography;

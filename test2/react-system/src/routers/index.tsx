@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import lazyLoad from "./utils/lazyLoad";
-import { store } from "@/redux";
+// import { store } from "@/redux";
 //引入
 import NoPermission from '@/views/errorPage/403'
 import NoFound from '@/views/errorPage/404'

@@ -19,7 +19,15 @@ declare interface ViteEnv {
 }
 
 declare interface Store {
-  // Redux Store 类型定义
+  dispatch: any;
+  getState: () => any;
+  subscribe: (listener: () => void) => () => void;
+  replaceReducer: (reducer: any) => void;
+  [Symbol.observable]?: any;
+}
+
+interface Window {
+  _REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
 }
 
 //menu
@@ -45,7 +53,6 @@ declare interface FormConfigItem {
   options?: { label: string, value: any }[],
   placeholder?: string,
   required?: boolean,
-  render?: (value: any) => any,
-  options?: { label: string, value: any }[],
+  render?: (value: any, record?: any) => any,
   disabled?: boolean,
 }

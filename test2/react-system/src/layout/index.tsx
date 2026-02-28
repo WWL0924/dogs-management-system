@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom"
 // 引入样式
 import './index.less'
 import LayoutMenu from "./component/Menu"
-import { store } from "@/redux"
+// import { store } from "@/redux"
 import { setAuthButton } from "@/redux/module/auth/action"
 import { connect } from "react-redux"
 import { useEffect } from "react"
@@ -34,7 +34,7 @@ const LayoutIndex = (props: any) => {
     <div className="container">
       <Sider collapsible width={220} theme="light" >
         {/* 这里根据role来显示不同的菜单 */}
-        <LayoutMenu role={role} />
+        <LayoutMenu />
       </Sider>
       <Layout>
         <Layout.Header className="site-layout-header">

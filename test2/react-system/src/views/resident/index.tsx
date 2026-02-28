@@ -1,4 +1,4 @@
-import { Typography, Card, Button } from 'antd';
+import { Typography, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { SmileOutlined, RightOutlined } from '@ant-design/icons';
 import React from 'react';
