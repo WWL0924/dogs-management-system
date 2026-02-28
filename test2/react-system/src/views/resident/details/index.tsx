@@ -1,8 +1,48 @@
 import FormGenerator from "@/components/formGenerator"
 import { Button, Modal, Table } from "antd"
 import { useEffect, useRef, useState } from "react"
-//这里直接复用mine的配置
-import { mineConfig } from "@/views/resident/mine/config"
+//生成器配置
+const mineConfig = [
+  {
+    label: 'ID',
+    name: 'id',
+    type: 'input',
+    placeholder: '请输入ID'
+  },
+  {
+    label: '姓名',
+    name: 'name',
+    type: 'input',
+    placeholder: '请输入姓名'
+  },
+  {
+    label: '性别',
+    name: 'sex',
+    type: 'select',
+    options: [
+      { label: '雄性', value: '雄性' },
+      { label: '雌性', value: '雌性' }
+    ]
+  },
+  {
+    label: '年龄',
+    name: 'age',
+    type: 'input',
+    placeholder: '请输入年龄'
+  },
+  {
+    label: '品种',
+    name: 'breed',
+    type: 'input',
+    placeholder: '请输入品种'
+  }
+]
+
+// 修复表单配置类型
+// const fixedMineConfig = mineConfig.map((item: any) => ({
+//   ...item,
+//   type: item.type as const
+// }))
 import { connect } from "react-redux"
 import dayjs from "dayjs"
 const Details = (props: any) => {

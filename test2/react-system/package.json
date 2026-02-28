@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vite build --test",
-    "build": "tsc -b && vite build --production",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "mock": "json-server --watch e:/资料/react-system/test2/react-system/db.json --port 4000"

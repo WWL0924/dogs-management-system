@@ -1,5 +1,5 @@
 import FormGenerator from "@/components/formGenerator"
-import complainConfig from "@/views/resident/complain/config"
+import { complainConfig } from "@/views/resident/complain/config"
 import { Button, Modal, Table } from "antd"
 import dayjs from "dayjs"
 import { useEffect, useRef, useState } from "react"
@@ -109,7 +109,7 @@ const Deal = () => {
     { title: '投诉人', dataIndex: 'name', key: 'name' },
     {
       title: '操作', dataIndex: 'operation', key: 'operation',
-      render: (status: boolean, record: any) => {
+      render: (_status: boolean, record: any) => {
         if (record.status) {
           return null
         } else {

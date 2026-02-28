@@ -5,19 +5,19 @@ export const mineConfig = [
   {
     label: '姓名',
     name: 'name',
-    type: 'input',
+    type: 'input' as const,
     placeholder: '请输入姓名'
   },
   {
     label: '品种',
     name: 'breed',
-    type: 'input',
+    type: 'input' as const,
     placeholder: '请输入品种'
   },
   {
     label: '性别',
     name: 'sex',
-    type: 'select',
+    type: 'select' as const,
     options: [
       { label: '雌性', value: '雌性' },
       { label: '雄性', value: '雄性' },
