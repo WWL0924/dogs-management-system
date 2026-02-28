@@ -10,10 +10,11 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
   const env = loadEnv(mode.mode, process.cwd())//当前环境模式 当前工作目录
   const viteEnv = warppEnv(env)
   return {
+    base: '/dogs-management-system/',
     plugins: [
       react(),
       //true的时候启用这个插件 打包时生成.gz压缩文件
-      viteEnv.VITE_USE_COMPRESS && viteCompression({
+      viteEnv.VITE_BUILD_COMPRESS && viteEnv.VITE_BUILD_COMPRESS !== 'none' && viteCompression({
         verbose: true,
         disable: false,
         threshold: 10240,
@@ -35,14 +36,14 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     server: {
       host: '0.0.0.0',
       port: viteEnv.VITE_PORT,
-      open: viteEnv.open,
-      proxy: {
+      open: viteEnv.open || false,
+      proxy: viteEnv.VITE_API_URL ? {
         '/api': {
           target: viteEnv.VITE_API_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         }
-      },
+      } : undefined,
     },
     // //打包配置
     // build: {
