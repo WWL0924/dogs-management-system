@@ -1,5 +1,5 @@
 import { Button, Checkbox, DatePicker, Form, Input, Radio, Select, Space } from "antd"
-import { forwardRef, useImperativeHandle } from "react"
+import { forwardRef } from "react"
 
 interface FormGeneratorProps {
   config: FormConfigItem[],
@@ -23,8 +23,6 @@ interface FormGeneratorProps {
 const SearchForm = forwardRef<any, FormGeneratorProps>(({
   //配置数组
   config,
-  //默认值
-  values,
   //是否有按钮功能
   isBtn = false,
   //按钮字段

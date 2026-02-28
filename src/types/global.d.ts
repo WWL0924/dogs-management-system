@@ -2,6 +2,10 @@ declare type Recordable<T = any> = Record<string, any>
 //等价于 { [key: string]: any }
 //key 是string value是任意类型的
 
+declare namespace JSX {
+  interface Element extends React.ReactElement<any, any> { }
+}
+
 declare interface ViteEnv {
   VITE_PORT: number;
   VITE_USE_MOCK: boolean;
@@ -10,6 +14,20 @@ declare interface ViteEnv {
   VITE_USE_CDN: boolean;
   VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
   VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
+  open?: boolean;
+  VITE_API_URL?: string;
+}
+
+declare interface Store {
+  dispatch: any;
+  getState: () => any;
+  subscribe: (listener: () => void) => () => void;
+  replaceReducer: (reducer: any) => void;
+  [Symbol.observable]?: any;
+}
+
+interface Window {
+  _REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
 }
 
 //menu
@@ -35,7 +53,6 @@ declare interface FormConfigItem {
   options?: { label: string, value: any }[],
   placeholder?: string,
   required?: boolean,
-  render?: (value: any) => any,
-  options?: { label: string, value: any }[],
+  render?: (value: any, record?: any) => any,
   disabled?: boolean,
 }

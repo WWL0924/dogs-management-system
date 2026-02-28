@@ -1,11 +1,11 @@
-import { Button, Input, Card, Form, Typography, Space, Select, message } from "antd";
+import { Button, Input, Card, Form, Typography, Select } from "antd";
 import { setToken } from "@/redux/module/global/action";
 //返回包装后的组件
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 //下拉菜单
-import { Dropdown } from 'antd';
+// import { Dropdown } from 'antd';
 import '../Login/index.less' // 复用登录页样式
 
 const { Title, Text } = Typography;

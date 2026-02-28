@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build --production",
     "lint": "eslint .",
     "preview": "vite preview",
-    "mock": "json-server --watch db.json --port 4000"
+    "mock": "json-server --watch e:/资料/react-system/test2/react-system/db.json --port 4000"
   },
   "dependencies": {
     "antd": "^6.2.2",
