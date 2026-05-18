@@ -14,7 +14,7 @@ const LayoutIndex = (props: any) => {
 
   //这里是从LayoutIndex组件的props解构出setAuthButton和role(权限)
   const { setAuthButton, role } = props
-  //  const role = useSelector((state: RootState) => state.user.role);
+
   //这里先写用户界面
   console.log('从store中取出的role', role)
   const getAuthButtonsList = async () => {

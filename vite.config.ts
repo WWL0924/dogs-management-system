@@ -10,7 +10,9 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
   const env = loadEnv(mode.mode, process.cwd())//当前环境模式 当前工作目录
   const viteEnv = warppEnv(env)
   return {
-    base: '/dogs-management-system/',
+    // base: '/dogs-management-system/',
+    base: '/',
+
     plugins: [
       react(),
       //true的时候启用这个插件 打包时生成.gz压缩文件

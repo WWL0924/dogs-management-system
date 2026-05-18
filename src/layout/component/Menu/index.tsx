@@ -121,10 +121,10 @@ const LayoutMenu = (props: LayoutMenuProps) => {
           }
         ]
       };
-
+      // 从data1中根据role获取对应菜单数据 如果role不存在则返回空数组
       const data = data1[role] || []
       const processedMenu = deepLoopFloat(data)
-      setMenuList(processedMenu)
+      setMenuList(processedMenu) // ui更新
 
       // 更新 Redux 权限路由
       const routerPaths = handleRouter(data)

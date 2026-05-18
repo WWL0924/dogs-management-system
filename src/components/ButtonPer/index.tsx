@@ -8,10 +8,8 @@ interface ButtonPerProps {
 }
 
 //按钮权限组件 只负责要不要显示 真正的按钮由 Comp 传进来
-//这里有报错 是怎么回事
 const ButtonPer = ({ btn, Comp }: ButtonPerProps): JSX.Element | null => {
-  //拿到当前页面允许的按钮
-  const { BUTTONS } = useAuthButtons()
+  const { BUTTONS } = useAuthButtons() //查当前页面按钮权限
   console.log('当前页面允许的按钮', BUTTONS)
   //这个按钮不需要权限控制
   if (!btn) {
