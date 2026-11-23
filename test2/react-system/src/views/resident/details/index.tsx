@@ -1,6 +1,6 @@
 import FormGenerator from "@/components/formGenerator"
-import { Button, Modal, Table } from "antd"
-import { useEffect, useRef, useState } from "react"
+import { Button, Modal, Table, type FormInstance } from "antd"
+import { useCallback, useEffect, useRef, useState } from "react"
 //生成器配置
 const mineConfig = [
   {
@@ -45,32 +45,34 @@ const mineConfig = [
 // }))
 import { connect } from "react-redux"
 import dayjs from "dayjs"
-const Details = (props: any) => {
+import type { RootState } from '@/redux/interface'
+import type { Dog } from '@/types/domain'
+const Details = (props: { name: string }) => {
   //列表数据
-  const [detailData, setDetailData] = useState([]) // 犬只数据
+  const [detailData, setDetailData] = useState<Dog[]>([]) // 犬只数据
   const [visible, setVisible] = useState(false) //弹窗是否可见
   //父组件绑定子组件引用
-  const form = useRef(null)
+  const form = useRef<FormInstance>(null)
   //存入当前id
   const [currentId, setCurrentId] = useState('') // 当前编辑的id
   //获取用户名
   const { name } = props
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const res = await fetch('http://localhost:4000/dogs')
     const data = await res.json()
     //只能显示对应用户的犬只
-    const userDogs = data.filter((item: any) => item.masterName === name)
+    const userDogs = data.filter((item: Dog) => item.masterName === name)
     setDetailData(userDogs)
-  }
+  }, [name])
   useEffect(() => {
-    fetchData()
-  }, [])
+    void Promise.resolve().then(fetchData)
+  }, [fetchData])
 
 
 
   //点击编辑
-  const handelEdit = async (record: any) => {
+  const handelEdit = async (record: Dog) => {
     console.log('#这一行的列表', record)
     // 存储当前id
     setCurrentId(record.id)
@@ -136,7 +138,7 @@ const Details = (props: any) => {
     {
       title: '操作',
       key: 'action',
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: Dog) => (
         <Button type="primary" size="small" onClick={() => handelEdit(record)}>
           编辑
         </Button >
@@ -169,7 +171,7 @@ const Details = (props: any) => {
   )
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     name: state.global.userInfo?.name || '' // 必须取出 name
   }

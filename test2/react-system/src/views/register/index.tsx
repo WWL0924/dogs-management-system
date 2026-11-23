@@ -7,6 +7,9 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 //下拉菜单
 // import { Dropdown } from 'antd';
 import '../Login/index.less' // 复用登录页样式
+import type { UserInfo } from '@/redux/interface';
+
+type RegisterValues = UserInfo & { password: string }
 
 const { Title, Text } = Typography;
 
@@ -19,7 +22,7 @@ const Register = () => {
 
 
   //输入完毕获取数据
-  const handleFinish = async (values: any) => {
+  const handleFinish = async (values: RegisterValues) => {
     //获取账号密码
     const { account, password, role, name } = values
     console.log(account, password, role, name)

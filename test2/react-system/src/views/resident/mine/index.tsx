@@ -1,27 +1,29 @@
 
-import { Button, Form, Input, Modal, Table } from "antd";
+import { Button, Form, Input, Modal, Table, type FormInstance } from "antd";
 import { mineConfig } from './config'
 import FormGenerator from "@/components/formGenerator";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
+import type { RootState } from '@/redux/interface'
+import type { Dog } from '@/types/domain'
 
 
-function Home(props: any) {
+function Home(props: { name: string }) {
   //列表数据
-  const [tableData, setTableData] = useState([])
+  const [tableData, setTableData] = useState<Dog[]>([])
   //页面数据
-  const [mineData, setMineData] = useState([])
+  const [mineData, setMineData] = useState<Dog[]>([])
   //获取当前登录的用户账号
   const { name } = props
   console.log('当前登录的用户账号', name)
 
 
   //从mock获取数据并且更新data
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const res = await fetch('http://localhost:3000/dogs')
+      const res = await fetch('http://localhost:4000/dogs')
       const result = await res.json()
-      const data = result.filter((item: any) => item.masterName === name)
+      const data = result.filter((item: Dog) => item.masterName === name)
       console.log('从mock中获取的相应用户的犬只', data)
       setMineData(data)
       setTableData(data)
@@ -29,18 +31,18 @@ function Home(props: any) {
     catch (error) {
       console.log('从mock获取数据失败', error)
     }
-  }
+  }, [name])
 
   //渲染完毕后获取数据?
   useEffect(() => {
     if (name) {
-      fetchData()
+      void Promise.resolve().then(fetchData)
     }
-  }, [name])
+  }, [name, fetchData])
 
 
   //查询功能
-  const handleSearch = (values: any) => {
+  const handleSearch = (values: { name?: string; breed?: string }) => {
     console.log('点击查询按钮表单值', values)
     if (!values) {
       setTableData(tableData)
@@ -65,7 +67,7 @@ function Home(props: any) {
 
   //弹窗是否可见
   const [visible, setVisible] = useState(false)
-  const form = useRef(null)
+  const form = useRef<FormInstance>(null)
 
 
   //新增功能
@@ -165,7 +167,7 @@ function Home(props: any) {
 
 
 }
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     name: state.global.userInfo?.name || '' // 必须取出 name
   }

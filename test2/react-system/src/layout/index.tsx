@@ -7,28 +7,29 @@ import LayoutMenu from "./component/Menu"
 // import { store } from "@/redux"
 import { setAuthButton } from "@/redux/module/auth/action"
 import { connect } from "react-redux"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
+import type { RootState } from '@/redux/interface'
 
 
-const LayoutIndex = (props: any) => {
+const LayoutIndex = (props: { setAuthButton: typeof setAuthButton; role: string; name: string }) => {
 
   //这里是从LayoutIndex组件的props解构出setAuthButton和role(权限)
   const { setAuthButton, role } = props
 
   //这里先写用户界面
   console.log('从store中取出的role', role)
-  const getAuthButtonsList = async () => {
+  const getAuthButtonsList = useCallback(async () => {
     const data = {
       '/resident/mine': ['add', 'del']
     }
     //实际上的写法 等接口请求完成 await拿到返回结果再往下执行
     //const data = await getAuthButtonsList()
     setAuthButton(data)
-  }
+  }, [setAuthButton])
 
   useEffect(() => {
     getAuthButtonsList()
-  }, [])
+  }, [getAuthButtonsList])
 
   return (
     <div className="container">
@@ -58,7 +59,7 @@ const LayoutIndex = (props: any) => {
 //改数据
 const mapDispatchToProps = { setAuthButton }
 //取数据
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     token: state.global.token,
     role: state.global.userInfo.role,

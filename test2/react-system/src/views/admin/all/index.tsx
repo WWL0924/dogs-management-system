@@ -18,7 +18,7 @@ const Review = () => {
   };
   //组件挂载时获取数据
   useEffect(() => {
-    fetchData();
+    void Promise.resolve().then(fetchData);
   }, []);
   //查询功能
   const handleSearch = async (values) => {

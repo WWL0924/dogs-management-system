@@ -6,8 +6,12 @@ export interface GlobalState {
 export interface AuthState {
   authRouter: string[],
   authButtons: {
-    [propName: string]: any
+    [propName: string]: string[]
   }
+}
+export interface RootState {
+  global: GlobalState,
+  auth: AuthState
 }
 //身份
 export interface UserInfo {

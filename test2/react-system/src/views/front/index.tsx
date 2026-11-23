@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 import { setToken } from '@/redux/module/global/action';
 import './index.less';
 import { useEffect, useState } from 'react';
+import type { RootState } from '@/redux/interface';
 
 //公告
-const FrontAnnouncement = (props: any) => {
+const FrontAnnouncement = (props: { setToken: typeof setToken; token: string }) => {
   const { setToken, token } = props
   //状态管理
   const [num, setNum] = useState(0)
@@ -41,7 +42,7 @@ const FrontAnnouncement = (props: any) => {
   }
 
   useEffect(() => {
-    fetchNum()
+    void Promise.resolve().then(fetchNum)
   }, [])
 
   //轮播图渲染
@@ -94,7 +95,7 @@ const FrontAnnouncement = (props: any) => {
 
 // export default FrontAnnouncement
 //取数据
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     token: state.global.token,
   }

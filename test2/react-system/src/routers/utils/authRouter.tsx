@@ -1,6 +1,7 @@
 
 import { connect } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
+import type { RootState } from '@/redux/interface'
 
 const AuthRouter = (props: { children: React.ReactNode, token: string, role: string }) => {
   // 自动变成props的children属性
@@ -38,7 +39,7 @@ const AuthRouter = (props: { children: React.ReactNode, token: string, role: str
 }
 
 //获取store中的token
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     token: state.global.token,
     role: state.global.userInfo?.role || ''

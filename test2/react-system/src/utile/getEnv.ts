@@ -1,10 +1,15 @@
+type ViteEnv = {
+  VITE_PORT: number
+  VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'
+  VITE_API_URL?: string
+  open?: boolean
+}
 
-
-export function warppEnv(envConf: any): any {
-  const ret: any = {}
+export function warppEnv(envConf: Record<string, string>): ViteEnv {
+  const ret: Record<string, unknown> = {}
 
   for (const envName of Object.keys(envConf)) {
-    let realName: any = envConf[envName].replace(/\\n/g, '\n')
+    let realName: unknown = envConf[envName].replace(/\\n/g, '\n')
 
     realName = realName === 'true'
       ? true
@@ -18,7 +23,7 @@ export function warppEnv(envConf: any): any {
 
     if (envName === 'VITE_PROXY') {
       try {
-        realName = JSON.parse(realName)
+        realName = JSON.parse(String(realName))
       } catch (error) {
         console.log(error)
       }
@@ -30,6 +35,6 @@ export function warppEnv(envConf: any): any {
     process.env[envName] = String(realName)
   }
 
-  return ret
+    return ret as unknown as ViteEnv
 }
 

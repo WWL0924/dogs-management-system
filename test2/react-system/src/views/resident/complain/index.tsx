@@ -1,33 +1,35 @@
-import { Button, Modal, Table } from "antd"
-import { useEffect, useState } from "react"
+import { Button, Modal, Table, type FormInstance } from "antd"
+import { useCallback, useEffect, useState } from "react"
 import { complainConfig } from "./config"
 import FormGenerator from "@/components/formGenerator"
 import { useRef } from "react"
 import { connect } from 'react-redux';
 import dayjs from "dayjs";
+import type { RootState } from '@/redux/interface'
+import type { Complaint } from '@/types/domain'
 
 //投诉与举报：遛狗不牵绳、不清理粪便等
-const Complain = (props: any) => {
+const Complain = (props: { name: string }) => {
   //获取用户名
   const { name } = props
-  const [complainData, setComplainData] = useState([])
+  const [complainData, setComplainData] = useState<Complaint[]>([])
   const [visible, setVisible] = useState(false)
-  const form = useRef<any>(null)
+  const form = useRef<FormInstance>(null)
 
   //表格数据
-  const fetchDate = async () => {
+  const fetchDate = useCallback(async () => {
     const res = await fetch('http://localhost:4000/complain')
     const result = await res.json()
-    const data = result.filter((item: any) => item.name === name)
+    const data = result.filter((item: Complaint) => item.name === name)
     console.log('#获取表格数据', data)
     return data
-  }
+  }, [name])
   //使用useEffect钩子函数获取数据
   useEffect(() => {
     fetchDate().then(data => {
       setComplainData(data)
     })
-  }, [])
+  }, [fetchDate])
 
   //新增投诉
   const handelComp = () => {
@@ -36,7 +38,7 @@ const Complain = (props: any) => {
 
   //弹窗里的ok
   const handleOk = () => {
-    form.current.validateFields().then((values: any) => {
+    form.current.validateFields().then((values: { time?: string }) => {
       // 处理时间格式
       if (values.time) {
         values.time = dayjs(values.time).format('YYYY-MM-DD')
@@ -66,7 +68,7 @@ const Complain = (props: any) => {
     })
   }
   //未处理的数据的删除操作
-  const handelEdit = (record: any) => {
+  const handelEdit = (record: Complaint) => {
     // 发送删除请求到后端
     fetch(`http://localhost:4000/complain/${record.id}`, {
       method: 'DELETE',
@@ -99,7 +101,7 @@ const Complain = (props: any) => {
     },
     {
       title: '操作', dataIndex: 'operation', key: 'operation',
-      render: (_text: any, record: any) => {
+      render: (_text: unknown, record: Complaint) => {
         // 如果已经处理了，就不能删除了
         if (record.status) {
           return null
@@ -136,7 +138,7 @@ const Complain = (props: any) => {
     </div>
   )
 }
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     name: state.global.userInfo?.name || '' // 必须取出 name
   }

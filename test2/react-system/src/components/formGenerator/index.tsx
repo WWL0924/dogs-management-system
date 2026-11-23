@@ -1,16 +1,16 @@
-import { Button, Checkbox, DatePicker, Form, Input, Radio, Select, Space } from "antd"
+import { Button, Checkbox, DatePicker, Form, Input, Radio, Select, Space, type FormInstance } from "antd"
 import { forwardRef } from "react"
 
 interface FormGeneratorProps {
   config: FormConfigItem[],
-  values?: any,
-  ref?: any,
+  values?: Record<string, unknown>,
+  ref?: React.Ref<FormInstance>,
   //是否有按钮
   isBtn?: boolean,
   //按钮字段
   confirmText?: string,
   //按钮功能
-  handelBtn?: (values: any) => void,
+  handelBtn?: () => void,
   //是否必填
   isrequired?: boolean,
 
@@ -20,7 +20,7 @@ interface FormGeneratorProps {
 
 //React.FC函数组件类型
 //props 的类型是 FormGeneratorProps
-const SearchForm = forwardRef<any, FormGeneratorProps>(({
+const SearchForm = forwardRef<FormInstance, FormGeneratorProps>(({
   //配置数组
   config,
   //是否有按钮功能
@@ -43,7 +43,7 @@ const SearchForm = forwardRef<any, FormGeneratorProps>(({
           <Select placeholder={item.placeholder} disabled={item.disabled}>
             {item.options?.map((option) => (
               // 是Select的子组件
-              <Select.Option key={option.value} value={option.value} disabled={item.disabled}>
+              <Select.Option key={String(option.value)} value={option.value} disabled={item.disabled}>
                 {option.label}
               </Select.Option>
             ))}

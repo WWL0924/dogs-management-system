@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Logo from './components/logo'
-import { Spin, Menu } from 'antd'
+import { Menu } from 'antd'
 import type { MenuProps } from 'antd';
 // 包里所有的图标组件导入到Icons对象
 import * as Icons from '@ant-design/icons'
@@ -8,12 +8,14 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setAuthRouter } from '@/redux/module/auth/action';
 import { connect } from 'react-redux';
+import type { RootState } from '@/redux/interface';
 
 // 定义类型
 type MenuItem = Required<MenuProps>['items'][number];
+type MenuNode = { path: string; label: string; icon: string; children?: MenuNode[] }
 
 // 动态渲染icon图标
-const customIcons: { [key: string]: any } = Icons
+const customIcons = Icons as unknown as Record<string, React.ComponentType>
 const renderIcon = (icon: string) => {
   if (!icon) return null
   const IconComp = customIcons[icon]
@@ -38,8 +40,8 @@ const getItem = (
 }
 
 // 数据转换逻辑 (抽离到外部避免重复创建)
-const deepLoopFloat = (menuList: any[], newArr: MenuItem[] = []): MenuItem[] => {
-  menuList.forEach((item: any) => {
+const deepLoopFloat = (menuList: MenuNode[], newArr: MenuItem[] = []): MenuItem[] => {
+  menuList.forEach((item) => {
     if (!item.children?.length) {
       newArr.push(getItem(item.label, item.path, renderIcon(item.icon)))
     } else {
@@ -50,8 +52,8 @@ const deepLoopFloat = (menuList: any[], newArr: MenuItem[] = []): MenuItem[] => 
 }
 
 // 把菜单处理成一维数组 (抽离到外部)
-const handleRouter = (routerList: any[], newArr: string[] = []): string[] => {
-  routerList.forEach((route: any) => {
+const handleRouter = (routerList: MenuNode[], newArr: string[] = []): string[] => {
+  routerList.forEach((route) => {
     if (route.children && route.children.length > 0) {
       handleRouter(route.children, newArr)
     } else {
@@ -84,16 +86,12 @@ const LayoutMenu = (props: LayoutMenuProps) => {
   const { pathname } = useLocation()
 
   // 状态定义
-  const [menuList, setMenuList] = useState<MenuItem[]>([])
-  const [loading, setLoading] = useState(false)
-  const [openKeys, setOpenKeys] = useState<string[]>([])
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+  const [openKeys, setOpenKeys] = useState<string[]>(() => getOpenKeys(pathname))
 
   // 获取菜单数据
-  const getMenuData = () => {
-    setLoading(true)
+  const { menuList, routerPaths } = useMemo(() => {
     try {
-      const data1: { [key: string]: any } = {
+      const data1: Record<string, MenuNode[]> = {
         resident: [
           {
             path: '/resident',
@@ -123,29 +121,25 @@ const LayoutMenu = (props: LayoutMenuProps) => {
       };
       // 从data1中根据role获取对应菜单数据 如果role不存在则返回空数组
       const data = data1[role] || []
-      const processedMenu = deepLoopFloat(data)
-      setMenuList(processedMenu) // ui更新
+      const processedMenu = deepLoopFloat(data) // ui更新
 
       // 更新 Redux 权限路由
       const routerPaths = handleRouter(data)
-      setAuthRouter(routerPaths)
-
-      setLoading(false)
+      return { menuList: processedMenu, routerPaths }
     } catch (err) {
-      setLoading(false)
       console.error('获取菜单数据失败:', err)
+      return { menuList: [] as MenuItem[], routerPaths: [] as string[] }
     }
-  }
+  }, [role])
 
   // 初始化菜单数据
   useEffect(() => {
-    getMenuData()
-  }, [role])
+    setAuthRouter(routerPaths)
+  }, [routerPaths, setAuthRouter])
 
   // 监听路由变化更新选中和展开状态
   useEffect(() => {
-    setSelectedKeys([pathname])
-    setOpenKeys(getOpenKeys(pathname))
+    void Promise.resolve().then(() => setOpenKeys(getOpenKeys(pathname)))
   }, [pathname])
 
   // 手动切换展开状态
@@ -171,25 +165,23 @@ const LayoutMenu = (props: LayoutMenuProps) => {
   return (
     <div className="Layout-menu">
       <Logo />
-      <Spin spinning={loading} tip="加载中...">
-        <Menu
+      <Menu
           theme='light'
           mode="inline"
           items={menuList}
           openKeys={openKeys}
-          selectedKeys={selectedKeys}
+          selectedKeys={[pathname]}
           // 点击主菜单就会把子菜单展开 而不是跳转主页面的功能是不是要在这改呢
           //改完之后怎么展开子菜单呢 只点旁边的小三角不行么
           onOpenChange={onOpenChange}
           onClick={clickMenu}
-        />
-      </Spin>
+      />
     </div>
   )
 }
 
 const mapDispathToProps = { setAuthRouter }
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
   role: state.global.userInfo?.role || ''
 })
 

@@ -8,19 +8,12 @@ import NoFound from '@/views/errorPage/404'
 import { LayoutIndex } from "./constant";
 import Login from "@/views/Login";
 import Register from "@/views/register/index";
+import { routerArray } from './routes'
 
 
 
 //导入modules文件夹下的路由文件
-const metaRouters = import.meta.glob('./modules/**/*.tsx', { eager: true })
-console.log('1导入文件夹下的路由文件', metaRouters)
 //处理路由
-const routerArray = [];
-Object.keys(metaRouters).forEach(item => {
-  Object.keys(metaRouters[item]).forEach(key => {
-    routerArray.push(...metaRouters[item][key])
-  });
-})
 const rootRouter = [
   // 点击首页按钮就到登录页面 然后登录页面的登录成功后再根据role跳转到不同的首页
   //首页

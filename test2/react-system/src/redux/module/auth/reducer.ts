@@ -4,16 +4,16 @@ import * as types from '@/redux/mutation-types'
 import { produce, type Draft } from "immer"
 const authRouter: AuthState = {
   authRouter: [],
-  authButtons: []
+  authButtons: {}
 }
 interface SET_AUTH_ROUTER extends Action {
   type: typeof types.SET_AUTH_ROUTER,
-  authRouter: []
+  authRouter: string[]
 }
 //action类型
 interface SET_AUTH_BUTTON extends Action {
   type: typeof types.SET_AUTH_BUTTON,
-  authButtons: []
+  authButtons: Record<string, string[]>
 }
 //reducer 能处理的 action 
 type ActionType = SET_AUTH_ROUTER | SET_AUTH_BUTTON

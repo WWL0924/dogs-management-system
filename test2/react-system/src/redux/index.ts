@@ -3,6 +3,8 @@
 //中间件增强 dispatch 多个reducer合并成一个根reducer 
 // 把多个中间件devtools等组合成增强器 创建redux store
 import { applyMiddleware, combineReducers, compose, createStore } from "redux"
+import type { Store as ReduxStore } from "redux"
+import type { RootState } from './interface'
 //包装reducer 让state持久化
 import persistReducer from "redux-persist/es/persistReducer"
 //持久化控制器
@@ -47,7 +49,7 @@ const middleWares = applyMiddleware(thunk)
 //七 创建store
 //注册reducer 注册中间件(支持异步) 打开devtools
 //store 是 Redux 的唯一数据源
-const store: Store = createStore(
+const store: ReduxStore<RootState> = createStore(
   persisitReducerConfig,
   composeEnhancers(middleWares)
 )

@@ -1,18 +1,19 @@
 import FormGenerator from "@/components/formGenerator";
 import { mineConfig } from "@/views/resident/mine/config";
-import { Button, Modal, Table } from "antd"
+import { Button, Modal, Table, type FormInstance } from "antd"
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
+import type { Dog } from '@/types/domain'
 
 
 const Manage = () => {
-  const [manageData, setManageData] = useState([]);
+  const [manageData, setManageData] = useState<Dog[]>([]);
   // 弹窗是否显示
   const [visible, setVisible] = useState(false);
   // 当前选中的犬只id
   const [currentId, setCurrentId] = useState('');
   // 表单实例
-  const form = useRef<any>(null);
+  const form = useRef<FormInstance>(null);
 
   //生成器配置
   const manageConfig = mineConfig.map((item) => ({
@@ -36,7 +37,7 @@ const Manage = () => {
   };
   //组件挂载时获取数据
   useEffect(() => {
-    fetchData();
+    void Promise.resolve().then(fetchData);
   }, []);
 
   //点击详情查看更多

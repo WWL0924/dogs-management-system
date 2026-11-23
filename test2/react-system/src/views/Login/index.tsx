@@ -5,6 +5,10 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useEffect } from "react";
+import type { RootState, UserInfo } from '@/redux/interface';
+
+type LoginValues = Pick<UserInfo, 'role' | 'account'> & { password: string }
+type LoginUser = UserInfo & { password: string }
 
 const { Title, Text } = Typography;
 
@@ -29,7 +33,7 @@ const Login = (props: LoginProps) => {
   const [form] = Form.useForm()
 
   //输入完毕获取数据
-  const handleFinish = async (values: any) => {
+  const handleFinish = async (values: LoginValues) => {
     const { role, account, password } = values
     //登录校验功能
     const http = 'http://localhost:4000' + '/' + role
@@ -40,10 +44,10 @@ const Login = (props: LoginProps) => {
       return data
     }
     //判断账号密码是否匹配
-    const user = await roleData().then((data: any) => data.find((item: any) => item.account === account && item.password === password))
+    const user = await roleData().then((data: LoginUser[]) => data.find((item) => item.account === account && item.password === password))
 
-    console.log('相应数据的用户名存入store', user.name)
     if (user) {
+      console.log('相应数据的用户名存入store', user.name)
       const name = user.name
       //存入store
       setUserInfo({ role, account, name })
@@ -135,7 +139,7 @@ const Login = (props: LoginProps) => {
 
 //操作action通过dispath 组件里不用自己调用 dispatch 直接调用 props 方法就行
 const mapDispatchToProps = { setToken, setUserInfo }
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     token: state.global.token,
     role: state.global.userInfo?.role || '' // 必须取出 role 

@@ -1,14 +1,14 @@
 import useAuthButtons from "@/hooks/useAuthButtons"
 
 
-type ButtonComponent = JSX.Element | null
+type ButtonComponent = React.JSX.Element | null
 interface ButtonPerProps {
   btn: string,
   Comp: ButtonComponent
 }
 
 //按钮权限组件 只负责要不要显示 真正的按钮由 Comp 传进来
-const ButtonPer = ({ btn, Comp }: ButtonPerProps): JSX.Element | null => {
+const ButtonPer = ({ btn, Comp }: ButtonPerProps): React.JSX.Element | null => {
   const { BUTTONS } = useAuthButtons() //查当前页面按钮权限
   console.log('当前页面允许的按钮', BUTTONS)
   //这个按钮不需要权限控制

@@ -1,7 +1,7 @@
 import { Spin } from 'antd'
 import { Suspense } from 'react'
 
-const lazyLoad = (Comp: React.LazyExoticComponent<any>): React.ReactNode => {
+const lazyLoad = (Comp: React.LazyExoticComponent<React.ComponentType>): React.ReactNode => {
   return (
     <Suspense fallback={ //没加载完成时显示
       // 加载动画

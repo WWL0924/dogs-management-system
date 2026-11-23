@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom"
-import { routerArray } from '@/routers/index'
+import { routerArray } from '@/routers/routes'
 import searchRoute from '@/utile/index'
 import { store } from "@/redux"
 

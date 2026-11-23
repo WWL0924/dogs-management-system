@@ -1,18 +1,19 @@
 import { Row, Col, Card, Table } from 'antd'
 import { useEffect, useState } from 'react'
+import type { Dog, Complaint } from '@/types/domain'
 
 const Todo = () => {
   //待审核犬只数据
-  const [dogData, setDogData] = useState([])
+  const [dogData, setDogData] = useState<Dog[]>([])
   //待处理投诉数据
-  const [compData, setCompData] = useState([])
+  const [compData, setCompData] = useState<Complaint[]>([])
 
 
   const fetchDogData = async () => {
     const res = await fetch('http://localhost:4000/dogs')
     const data = await res.json()
     //只能显示对应用户的犬只
-    const userDogs = data.filter((item: any) => item.status === 0)
+    const userDogs = data.filter((item: Dog) => item.status === 0)
     console.log('#获取待审核犬只数据', userDogs)
     setDogData(userDogs)
   }
@@ -21,14 +22,14 @@ const Todo = () => {
     const res = await fetch('http://localhost:4000/complain')
     const data = await res.json()
     //只能显示对应用户的投诉
-    const userComps = data.filter((item: any) => item.status === false)
+    const userComps = data.filter((item: Complaint) => item.status === 0)
     console.log('#获取待处理投诉数据', userComps)
     setCompData(userComps)
   }
 
   useEffect(() => {
-    fetchDogData()
-    fetchComp()
+    void Promise.resolve().then(fetchDogData)
+    void Promise.resolve().then(fetchComp)
   }, [])
 
   //犬只配置

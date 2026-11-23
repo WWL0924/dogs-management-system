@@ -11,7 +11,7 @@ export const setAuthRouter = (authRouter: string[]) => {
 }
 
 //设置按钮权限
-export const setAuthButton = (authButtons: { [propName: string]: any }) => {
+export const setAuthButton = (authButtons: Record<string, string[]>) => {
   return {
     type: types.SET_AUTH_BUTTON,
     //这里的属性名拼接一个'/'

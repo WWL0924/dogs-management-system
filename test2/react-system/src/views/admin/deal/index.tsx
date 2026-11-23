@@ -1,36 +1,37 @@
 import FormGenerator from "@/components/formGenerator"
 import { complainConfig } from "@/views/resident/complain/config"
-import { Button, Modal, Table } from "antd"
+import { Button, Modal, Table, type FormInstance } from "antd"
 import dayjs from "dayjs"
 import { useEffect, useRef, useState } from "react"
+import type { Complaint } from '@/types/domain'
 
 
 const Deal = () => {
   const [visible, setVisible] = useState(false)
   //获取投诉数据
-  const [dealData, setDealData] = useState([])
+  const [dealData, setDealData] = useState<Complaint[]>([])
   // 当前处理的投诉记录
   const [currentId, setCurrentId] = useState(null)
 
   //处理投诉弹窗表单实例
-  const form = useRef<any>(null)
+  const form = useRef<FormInstance>(null)
 
 
   const fetchData = async () => {
     const res = await fetch('http://localhost:4000/complain')
     const result = await res.json()
-    const data = result.filter((item: any) => item.status === 0)
+    const data = result.filter((item: Complaint) => item.status === 0)
     console.log('#获取未处理的投诉数据', data)
     setDealData(data)
   }
   useEffect(() => {
-    fetchData()
+    void Promise.resolve().then(fetchData)
 
   }, [])
 
 
   //处理
-  const handleDeal = (record: any) => {
+  const handleDeal = (record: Complaint) => {
     console.log('#当前投诉数据', record.id)
     setCurrentId(record.id)
     setVisible(true)
@@ -98,7 +99,7 @@ const Deal = () => {
   }
 
   //生成器配置
-  const dealConfig = complainConfig.map((item: any) => ({
+  const dealConfig = complainConfig.map((item) => ({
     ...item,
     disabled: true
   }))
@@ -109,7 +110,7 @@ const Deal = () => {
     { title: '投诉人', dataIndex: 'name', key: 'name' },
     {
       title: '操作', dataIndex: 'operation', key: 'operation',
-      render: (_status: boolean, record: any) => {
+      render: (_status: boolean, record: Complaint) => {
         if (record.status) {
           return null
         } else {

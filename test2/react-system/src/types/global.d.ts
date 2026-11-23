@@ -1,10 +1,6 @@
-declare type Recordable<T = any> = Record<string, any>
+declare type Recordable<T = unknown> = Record<string, T>
 //等价于 { [key: string]: any }
 //key 是string value是任意类型的
-
-declare namespace JSX {
-  interface Element extends React.ReactElement<any, any> { }
-}
 
 declare interface ViteEnv {
   VITE_PORT: number;
@@ -19,15 +15,15 @@ declare interface ViteEnv {
 }
 
 declare interface Store {
-  dispatch: any;
-  getState: () => any;
+  dispatch: (action: unknown) => unknown;
+  getState: () => unknown;
   subscribe: (listener: () => void) => () => void;
-  replaceReducer: (reducer: any) => void;
-  [Symbol.observable]?: any;
+  replaceReducer: (reducer: unknown) => void;
+  [Symbol.observable]?: unknown;
 }
 
 interface Window {
-  _REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
+  _REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof import('redux').compose;
 }
 
 //menu
@@ -50,9 +46,9 @@ declare interface FormConfigItem {
   label: string,
   name: string,
   type: 'input' | 'radio' | 'select' | 'checkbox' | 'datepicker' | string,
-  options?: { label: string, value: any }[],
+  options?: { label: string, value: string | number | boolean }[],
   placeholder?: string,
   required?: boolean,
-  render?: (value: any, record?: any) => any,
+  render?: (value: unknown, record?: Record<string, unknown>) => React.ReactNode,
   disabled?: boolean,
 }
