@@ -7,7 +7,8 @@ function App() {
 
 
   return (
-    // 提供路由运行环境
+
+    // 统一全局主题
     <ConfigProvider
       theme={{
         token: {
@@ -31,13 +32,17 @@ function App() {
         }
       }}
     >
+      {/* 提供路由运行环境 */}
+      {/* 感知url变化 */}
       <BrowserRouter>
+        {/* 路由守卫 */}
         <AuthRouter>
           {/* 根据用户角色渲染不同首页 共用一个layout */}
           <Router />
         </AuthRouter>
       </BrowserRouter>
     </ConfigProvider>
+    // 全局主题
   )
 }
 

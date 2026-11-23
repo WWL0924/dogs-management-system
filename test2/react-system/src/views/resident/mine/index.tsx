@@ -19,7 +19,7 @@ function Home(props: any) {
   //从mock获取数据并且更新data
   const fetchData = async () => {
     try {
-      const res = await fetch('http://localhost:4000/dogs')
+      const res = await fetch('http://localhost:3000/dogs')
       const result = await res.json()
       const data = result.filter((item: any) => item.masterName === name)
       console.log('从mock中获取的相应用户的犬只', data)

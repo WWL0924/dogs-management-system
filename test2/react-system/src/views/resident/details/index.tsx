@@ -49,6 +49,7 @@ const Details = (props: any) => {
   //列表数据
   const [detailData, setDetailData] = useState([]) // 犬只数据
   const [visible, setVisible] = useState(false) //弹窗是否可见
+  //父组件绑定子组件引用
   const form = useRef(null)
   //存入当前id
   const [currentId, setCurrentId] = useState('') // 当前编辑的id

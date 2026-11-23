@@ -25,8 +25,6 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         deleteOriginFile: false,
         filter: /\.(js|mjs|json|css|html)$/i,
       })
-
-
     ],
     // vite底层要求绝对路径
     resolve: {

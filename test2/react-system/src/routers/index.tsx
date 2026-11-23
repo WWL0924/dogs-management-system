@@ -88,7 +88,6 @@ const Router = () => {
   // console.log('当前的url routes', routes);
   return routes
 }
-console.log('1导出的路由列表', routerArray)
 //导出这个组件
 export default Router
-export { routerArray }
+// export { routerArray }
