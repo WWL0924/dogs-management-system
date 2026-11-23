@@ -34,7 +34,7 @@ function App() {
     >
       {/* 提供路由运行环境 */}
       {/* 感知url变化 */}
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         {/* 路由守卫 */}
         <AuthRouter>
           {/* 根据用户角色渲染不同首页 共用一个layout */}

@@ -10,8 +10,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
   const env = loadEnv(mode.mode, process.cwd())//当前环境模式 当前工作目录
   const viteEnv = warppEnv(env)
   return {
-    // base: '/dogs-management-system/',
-    base: '/',
+    base: mode.command === 'build' ? '/dog-management-system/' : '/',
 
     plugins: [
       react(),
