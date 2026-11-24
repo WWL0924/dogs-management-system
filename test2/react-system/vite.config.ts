@@ -11,6 +11,10 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
   const viteEnv = warppEnv(env)
   return {
     base: mode.command === 'build' ? '/dog-management-system/' : '/',
+    build: {
+      outDir: '../docs',
+      emptyOutDir: true,
+    },
 
     plugins: [
       react(),
