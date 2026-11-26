@@ -1,0 +1,80 @@
+{
+  "source": {
+    "users": 5,
+    "dogs": 9,
+    "complaints": 6
+  },
+  "imported": {
+    "users": 4,
+    "dogs": 8,
+    "complaints": 1
+  },
+  "issues": [
+    {
+      "collection": "admin",
+      "index": 1,
+      "id": "d1a3",
+      "reason": "账号 admin 重复，未导入"
+    },
+    {
+      "collection": "dogs",
+      "index": 4,
+      "id": "fe67",
+      "reason": "犬证编号 002 重复，导入时置空"
+    },
+    {
+      "collection": "dogs",
+      "index": 5,
+      "id": "bb5d",
+      "reason": "犬证编号 001 重复，导入时置空"
+    },
+    {
+      "collection": "dogs",
+      "index": 5,
+      "id": "bb5d",
+      "reason": "未接种却有接种日期，导入时清空日期"
+    },
+    {
+      "collection": "dogs",
+      "index": 6,
+      "id": "9ef6",
+      "reason": "犬只 id 重复，采用最后一条记录"
+    },
+    {
+      "collection": "dogs",
+      "index": 8,
+      "id": "0941",
+      "reason": "犬证编号 002 重复，导入时置空"
+    },
+    {
+      "collection": "complain",
+      "index": 0,
+      "id": "0001",
+      "reason": "缺少投诉人，未导入"
+    },
+    {
+      "collection": "complain",
+      "index": 2,
+      "id": "0003",
+      "reason": "已处理记录缺少处理人和处理结果，未导入"
+    },
+    {
+      "collection": "complain",
+      "index": 3,
+      "id": "0004",
+      "reason": "已处理记录缺少处理人和处理结果，未导入"
+    },
+    {
+      "collection": "complain",
+      "index": 4,
+      "id": "0005",
+      "reason": "缺少投诉人，未导入"
+    },
+    {
+      "collection": "complain",
+      "index": 5,
+      "id": "0d00",
+      "reason": "已处理记录缺少处理人和处理结果，未导入"
+    }
+  ]
+}

@@ -15,10 +15,10 @@
     "skipLibCheck": true,
     "paths": {
       "@": [
-        "./src"
+      "./src/web"
       ],
       "@/*": [
-        "./src/*"
+      "./src/web/*"
       ]
     },
     /* Bundler mode */
@@ -48,5 +48,6 @@
   "exclude": [
     "node_modules",
     "docs",
+    "src/server",
   ]
 }

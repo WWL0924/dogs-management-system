@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import searchRoute from '../src/utile/index.ts'
+import searchRoute from '../src/web/utile/index.ts'
 
 test('finds a nested route', () => {
   const routes = [

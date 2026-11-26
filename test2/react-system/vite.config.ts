@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { warppEnv } from './src/utile/getEnv'
+import { warppEnv } from './src/web/utile/getEnv'
 import viteCompression from "vite-plugin-compression"
 
 // https://vite.dev/config/
@@ -32,7 +32,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     // vite底层要求绝对路径
     resolve: {
       alias: {
-        '@': resolve(__dirname, './src'),
+        '@': resolve(__dirname, './src/web'),
       },
     },
     //启动的时候自动启动
@@ -40,13 +40,12 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       host: '0.0.0.0',
       port: viteEnv.VITE_PORT,
       open: viteEnv.open || false,
-      proxy: viteEnv.VITE_API_URL ? {
+      proxy: {
         '/api': {
-          target: viteEnv.VITE_API_URL,
+          target: viteEnv.VITE_API_URL || 'http://localhost:4000',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
         }
-      } : undefined,
+      },
     },
     // //打包配置
     // build: {
