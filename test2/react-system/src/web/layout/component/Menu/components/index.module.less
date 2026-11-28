@@ -5,17 +5,33 @@
   height: 64px;
   margin-bottom: 8px;
   /* 增加微妙的背景区分 */
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
+  background: #f8fcfd;
+  border-bottom: 1px solid var(--border-color);
 
   .logo_img {
-    width: 36px;
+    width: 42px;
+    height: 42px;
     margin: 0;
-    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    border-radius: 50%;
+    border: 2px solid #dceff3;
+    object-fit: cover;
+    transition: transform 180ms ease;
     cursor: pointer;
 
     &:hover {
-      transform: rotate(360deg);
+      transform: scale(1.08);
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .logo {
+    height: 48px;
+    margin-bottom: 0;
+
+    .logo_img {
+      width: 34px;
+      height: 34px;
     }
   }
 }

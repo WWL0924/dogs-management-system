@@ -44,6 +44,10 @@ const rootRouter = [
         path: '/admin',
         element: lazyLoad(React.lazy(() => import('@/views/admin/index'))),
       },
+      {
+        path: '/admin/announcements',
+        element: lazyLoad(React.lazy(() => import('@/views/admin/announcements'))),
+      },
     ]
   },
   {
@@ -53,6 +57,10 @@ const rootRouter = [
       {
         path: '/resident',
         element: lazyLoad(React.lazy(() => import('@/views/resident/index'))),
+      },
+      {
+        path: '/resident/announcements',
+        element: lazyLoad(React.lazy(() => import('@/views/resident/announcements'))),
       },
     ]
   },

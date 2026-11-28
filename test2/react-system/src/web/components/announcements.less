@@ -1,0 +1,42 @@
+.announcements {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+
+  .announcements-heading,
+  .announcement-item-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  .announcements-heading {
+    margin-bottom: 16px;
+  }
+
+  .announcements-heading .ant-typography,
+  .announcement-item-heading .ant-typography {
+    margin: 0;
+  }
+
+  .announcement-item {
+    padding: 18px 0;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .announcement-item .ant-typography {
+    overflow-wrap: anywhere;
+  }
+
+  .announcement-item p {
+    margin: 10px 0 6px;
+    white-space: pre-wrap;
+  }
+
+  .announcements-loading {
+    padding: 40px 0;
+    text-align: center;
+  }
+}

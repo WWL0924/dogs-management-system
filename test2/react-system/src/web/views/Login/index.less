@@ -1,13 +1,14 @@
 .login-container {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   /* 更加清新的绿色渐变背景 */
-  background: linear-gradient(135deg, #f6ffed 0%, #e8f5e9 100%);
+  background: #eef3f5;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
+  padding: 24px;
 
   /* 背景装饰 */
   &::before {
@@ -17,7 +18,7 @@
     left: -100px;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(82, 196, 26, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(8, 126, 146, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
   }
 
@@ -28,37 +29,36 @@
     right: -50px;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(82, 196, 26, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(239, 156, 168, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
   }
 
   .login-card {
-    width: 420px;
-    border-radius: 12px;
+    width: min(100%, 430px);
+    border-radius: 18px;
     /* 更加柔和的卡片样式 */
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    background: #fff;
+    box-shadow: 0 22px 56px rgba(24, 75, 87, 0.1);
     padding: 10px; /* Card 组件本身有 padding，这里稍微加一点或者保持默认 */
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-color);
     z-index: 10;
 
     .login-header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       margin-top: 10px;
 
       h2.ant-typography {
         color: var(--primary-color) !important;
         margin-bottom: 8px;
-        font-size: 28px;
-        font-weight: 600;
-        letter-spacing: 1px;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
       }
       
       span.ant-typography-secondary {
         font-size: 14px;
-        color: #8c8c8c;
+        color: var(--text-secondary);
       }
     }
     
@@ -68,7 +68,7 @@
     
     /* 图标样式 */
     .site-form-item-icon {
-      color: rgba(0, 0, 0, 0.25);
+      color: #6b9daa;
     }
     
     /* 按钮组样式 */
@@ -83,8 +83,8 @@
     /* 输入框样式优化 */
     .ant-input-affix-wrapper {
       padding: 10px 11px;
-      background-color: #f9f9f9;
-      border: 1px solid #eee;
+      background-color: #f8fcfd;
+      border: 1px solid var(--border-color);
       
       &:hover, &:focus, &.ant-input-affix-wrapper-focused {
         background-color: #fff;
@@ -99,27 +99,38 @@
     .ant-btn-primary {
       height: 44px;
       font-size: 16px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, #73d13d 0%, #52c41a 100%);
-      border: none;
-      box-shadow: 0 4px 15px rgba(82, 196, 26, 0.35);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      background: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      box-shadow: 0 4px 12px rgba(8, 126, 146, 0.2);
       
       &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(82, 196, 26, 0.45);
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        box-shadow: 0 5px 14px rgba(8, 126, 146, 0.24);
       }
     }
     
     .ant-btn-default {
       height: 44px;
       font-size: 16px;
-      border-color: #d9d9d9;
+      border-color: var(--border-color);
       
       &:hover {
         border-color: var(--primary-color);
         color: var(--primary-color);
       }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 16px;
+
+    .login-card .ant-card-body {
+      padding: 20px 18px 22px;
     }
   }
 }

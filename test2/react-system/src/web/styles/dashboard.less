@@ -1,51 +1,264 @@
 .admin-welcome {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e6f7ff 100%);
-  padding: 24px;
+  min-height: 100%;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  background: transparent;
+  padding: 32px 40px 48px;
   // min-height: calc(100vh - 64px); 
 
   .welcome-card {
     width: 100%;
-    max-width: 800px;
-    text-align: center;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    padding: 40px 20px;
-    background: #fff;
+    text-align: left;
+    padding: 24px 28px 20px;
+    margin-bottom: 28px;
+    background: #087e92;
+    border-radius: 8px;
+
+    > div:first-child {
+      margin-bottom: 10px !important;
+    }
+
+    > div:last-child {
+      justify-content: flex-start !important;
+      flex-wrap: wrap;
+    }
   }
 
   .welcome-icon {
-    font-size: 80px;
-    color: var(--primary-color);
-    margin-bottom: 32px;
+    font-size: 30px;
+    color: #cdeaf0;
+    margin-bottom: 0;
   }
 
   .welcome-title {
-    margin-bottom: 16px !important;
-    color: var(--text-color);
+    margin-bottom: 10px !important;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.4;
   }
 
   .welcome-desc {
-    font-size: 16px;
-    color: var(--text-secondary);
-    margin-bottom: 32px;
-    line-height: 1.8;
+    font-size: 14px;
+    color: #e6f5f8;
+    margin-bottom: 16px;
+    line-height: 1.7;
   }
 
   .action-btn {
-    padding: 0 32px;
-    height: 48px;
-    font-size: 16px;
-    margin: 0 12px;
-    border-radius: 24px;
-    box-shadow: 0 4px 10px rgba(82, 196, 26, 0.2);
+    padding: 0 18px;
+    min-height: 40px;
+    height: auto;
+    font-size: 14px;
+    margin: 0 10px 8px 0;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(9, 62, 73, 0.12);
     
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(82, 196, 26, 0.3);
+      box-shadow: 0 4px 12px rgba(9, 62, 73, 0.18);
+    }
+  }
+
+  .welcome-card .ant-btn-primary:not(.ant-btn-dangerous) {
+    color: #087e92;
+    background: #fff;
+    border-color: #fff;
+
+    &:hover {
+      color: #066c7e;
+      background: #e6f5f8;
+      border-color: #e6f5f8;
+    }
+  }
+
+  .dashboard-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+
+    .ant-typography {
+      margin-bottom: 0;
+    }
+  }
+
+  .dashboard-eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .dashboard-metrics {
+    margin-bottom: 24px;
+  }
+
+  .dashboard-metric {
+    height: 100%;
+    min-height: 145px;
+    border-radius: 8px;
+    box-shadow: none;
+
+    .ant-card-body {
+      padding: 20px 22px;
+    }
+
+    .ant-statistic-title {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .ant-statistic-content {
+      color: var(--text-color);
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+  }
+
+  .dashboard-metric-icon {
+    margin-bottom: 12px;
+    font-size: 21px;
+  }
+
+  .dashboard-metric-green { background: #e8f4f6; }
+  .dashboard-metric-amber { background: #fff6e9; }
+  .dashboard-metric-coral { background: #fff0f2; }
+  .dashboard-metric-teal { background: #edf7f3; }
+
+  .dashboard-metric-green .dashboard-metric-icon { color: #087e92; }
+  .dashboard-metric-amber .dashboard-metric-icon { color: #b87627; }
+  .dashboard-metric-coral .dashboard-metric-icon { color: #c35f74; }
+  .dashboard-metric-teal .dashboard-metric-icon { color: #3e916d; }
+
+  .dashboard-details {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .dashboard-status,
+  .dashboard-recent {
+    min-width: 0;
+    min-height: 228px;
+    padding: 20px 22px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+  }
+
+  .dashboard-panel-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+
+    .ant-typography {
+      margin: 0;
+    }
+
+    .ant-typography-secondary {
+      font-size: 12px;
+      white-space: nowrap;
+    }
+  }
+
+  .dashboard-status-row + .dashboard-status-row {
+    margin-top: 12px;
+  }
+
+  .dashboard-status-label,
+  .dashboard-recent-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .dashboard-status-label {
+    margin-bottom: 2px;
+    font-size: 13px;
+  }
+
+  .dashboard-recent-row {
+    min-height: 48px;
+    padding: 7px 0;
+    border-top: 1px solid #e6eef0;
+  }
+
+  .dashboard-recent-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 13px;
+
+    .ant-typography {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .dashboard-recent-row .ant-tag {
+    flex: none;
+    margin: 0;
+  }
+
+  .dashboard-content > .ant-alert {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .admin-welcome .dashboard-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .dashboard-status {
+      grid-column: 1 / -1;
+      min-height: 0;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-welcome {
+    padding: 20px 16px 32px;
+
+    .welcome-card {
+      padding: 20px 18px 16px;
+    }
+
+    .welcome-title {
+      font-size: 21px;
+    }
+
+    .dashboard-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .dashboard-metric {
+      min-height: 128px;
+
+      .ant-card-body {
+        padding: 16px;
+      }
+
+      .ant-statistic-content {
+        font-size: 26px;
+      }
+    }
+
+    .dashboard-details {
+      grid-template-columns: minmax(0, 1fr);
+
+      .dashboard-status {
+        grid-column: auto;
+      }
     }
   }
 }

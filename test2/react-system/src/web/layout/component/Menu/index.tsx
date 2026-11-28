@@ -102,6 +102,7 @@ const LayoutMenu = (props: LayoutMenuProps) => {
               { path: '/resident/details', label: '犬只详情', icon: 'InfoCircleOutlined' },
               { path: '/resident/complain', label: '投诉与举报', icon: 'WarningOutlined' },
               { path: '/resident/rules', label: '社区规范', icon: 'BookOutlined' },
+              { path: '/resident/announcements', label: '社区公告', icon: 'NotificationOutlined' },
             ]
           }
         ],
@@ -115,6 +116,7 @@ const LayoutMenu = (props: LayoutMenuProps) => {
               { path: '/admin/all', label: '犬只总览', icon: 'AuditOutlined' },
               { path: '/admin/manage', label: '登记审核', icon: 'DatabaseOutlined' },
               { path: '/admin/deal', label: '投诉处理', icon: 'AlertOutlined' },
+              { path: '/admin/announcements', label: '公告管理', icon: 'NotificationOutlined' },
             ]
           }
         ]

@@ -4,7 +4,7 @@ import { Button, Input, message, Modal, Table, type FormInstance } from "antd"
 import dayjs from "dayjs"
 import { useEffect, useRef, useState } from "react"
 import type { Complaint } from '@/types/domain'
-import { apiFetch } from '@/api'
+import { apiFetch, apiJson } from '@/api'
 
 
 const Deal = () => {
@@ -20,14 +20,15 @@ const Deal = () => {
 
 
   const fetchData = async () => {
-    const res = await apiFetch('/api/complaints?status=0')
-    const result = await res.json()
+    const result = await apiJson<Complaint[]>('/api/complaints?status=0')
     const data = result.filter((item: Complaint) => item.status === 0)
     console.log('#获取未处理的投诉数据', data)
     setDealData(data)
   }
   useEffect(() => {
-    void Promise.resolve().then(fetchData)
+    void Promise.resolve().then(fetchData).catch((error) => {
+      message.error(error instanceof Error ? error.message : '待处理投诉加载失败')
+    })
 
   }, [])
 
@@ -71,9 +72,12 @@ const Deal = () => {
         // 更新成功后刷新数据
         fetchData()
         setVisible(false)
+      } else {
+        message.error((await res.json()).message || '处理失败')
       }
     } catch (error) {
       console.error('更新数据失败:', error);
+      message.error(error instanceof Error ? error.message : '处理失败')
     }
   }
   //点击 驳回
@@ -98,9 +102,12 @@ const Deal = () => {
         // 更新成功后刷新数据
         fetchData()
         setVisible(false)
+      } else {
+        message.error((await res.json()).message || '驳回失败')
       }
     } catch (error) {
       console.error('更新数据失败:', error);
+      message.error(error instanceof Error ? error.message : '驳回失败')
     }
   }
 

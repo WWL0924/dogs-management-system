@@ -1,4 +1,4 @@
-import { Button, Modal, Table, type FormInstance } from "antd"
+import { Button, message, Modal, Table, type FormInstance } from "antd"
 import { useCallback, useEffect, useState } from "react"
 import { complainConfig } from "./config"
 import FormGenerator from "@/components/formGenerator"
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import dayjs from "dayjs";
 import type { RootState } from '@/redux/interface'
 import type { Complaint } from '@/types/domain'
-import { apiFetch } from '@/api'
+import { apiFetch, apiJson } from '@/api'
 
 //投诉与举报：遛狗不牵绳、不清理粪便等
 const Complain = (props: { name: string }) => {
@@ -19,17 +19,15 @@ const Complain = (props: { name: string }) => {
 
   //表格数据
   const fetchDate = useCallback(async () => {
-    const res = await apiFetch('/api/complaints')
-    const result = await res.json()
-    const data = result.filter((item: Complaint) => item.name === name)
+    const data = await apiJson<Complaint[]>('/api/complaints')
     console.log('#获取表格数据', data)
     return data
-  }, [name])
+  }, [])
   //使用useEffect钩子函数获取数据
   useEffect(() => {
     fetchDate().then(data => {
       setComplainData(data)
-    })
+    }).catch((error) => message.error(error instanceof Error ? error.message : '投诉列表加载失败'))
   }, [fetchDate])
 
   //新增投诉
@@ -45,9 +43,8 @@ const Complain = (props: { name: string }) => {
         values.time = dayjs(values.time).format('YYYY-MM-DD')
       }
       console.log('#投诉表单的时间', values.time)
-      setVisible(false)
       // 提交数据到后端 这里还包括添加用户姓名和状态
-      apiFetch('/api/complaints', {
+      void apiJson<Complaint>('/api/complaints', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,15 +54,21 @@ const Complain = (props: { name: string }) => {
           name: name,
           status: 0
         }),
-      }).then(res => res.json()).then(data => {
+      }).then(async (data) => {
         console.log('#新增投诉', data)
         // 刷新数据
-        fetchDate().then(data => {
-          setComplainData(data)
-          // 刷新数据后，弹窗关闭
-          setVisible(false)
-        })
-      })
+        // 刷新数据后，弹窗关闭
+        setVisible(false)
+        try {
+          setComplainData(await fetchDate())
+        } catch (error) {
+          message.error(error instanceof Error ? error.message : '投诉列表刷新失败')
+        }
+      }).catch((error) => message.error(error instanceof Error ? error.message : '新增投诉失败'))
+    }).catch((error) => {
+      if (!(error && typeof error === 'object' && 'errorFields' in error)) {
+        message.error(error instanceof Error ? error.message : '表单校验失败')
+      }
     })
   }
   //未处理的数据的删除操作
@@ -77,10 +80,10 @@ const Complain = (props: { name: string }) => {
       if (!res.ok) throw new Error('撤销失败')
       console.log('#删除投诉', record.id)
       // 刷新数据
-      fetchDate().then(data => {
+      return fetchDate().then(data => {
         setComplainData(data)
       })
-    })
+    }).catch((error) => message.error(error instanceof Error ? error.message : '撤销失败'))
   }
   //表格配置
   const columns = [

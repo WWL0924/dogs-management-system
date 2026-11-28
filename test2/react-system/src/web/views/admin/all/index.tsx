@@ -1,6 +1,6 @@
-import { Button, Form, Input, Radio, Table } from "antd";
+import { Button, Form, Input, message, Radio, Table } from "antd";
 import { useEffect, useState } from "react";
-import { apiFetch } from '@/api'
+import { apiJson } from '@/api'
 
 const Review = () => {
   const [allData, setAllData] = useState([]);
@@ -8,13 +8,13 @@ const Review = () => {
   //获取所有犬只信息
   const fetchData = async () => {
     try {
-      const response = await apiFetch('/api/dogs');
-      const data = await response.json();
+      const data = await apiJson<[]>('/api/dogs');
       console.log('#所有数据', data)
       setAllData(data);
       setFilteredData(data)
     } catch (error) {
       console.error('获取数据失败:', error);
+      message.error(error instanceof Error ? error.message : '犬只总览加载失败')
     }
   };
   //组件挂载时获取数据

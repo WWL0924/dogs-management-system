@@ -481,6 +481,8 @@ values (
     '2025-09-01 00:00:00'
   );
 commit;
+
+
 */
 
 -- 补录已存在的犬只与投诉：只单独执行本区块，不要重跑上方的用户和犬只插入语句。
@@ -508,4 +510,137 @@ where u.account = 'zhangsan'
       and c.content = '王五遛狗不牵绳'
       and c.created_at = '2025-09-01 00:00:00'
   );
+commit;
+
+-- 首页演示数据：依赖 seed.sql 中已有的居民和管理员账号，可重复执行。
+-- 犬证编号用于识别本批犬只；未接种犬只的最近接种日期保持为空。
+use dog_system;
+start transaction;
+insert into dogs (
+  name, breed, sex, age, vaccinated, last_vaccinated_on,
+  contact_phone, license_number, status, created_at
+)
+select sample.name, sample.breed, sample.sex, sample.age, sample.vaccinated,
+  sample.last_vaccinated_on, sample.contact_phone, sample.license_number,
+  sample.status, sample.created_at
+from (
+  select '团团' as name, '柯基犬' as breed, '雌性' as sex, 2 as age,
+    1 as vaccinated, '2026-05-12' as last_vaccinated_on,
+    '13800000001' as contact_phone, 'DEMO-2026-001' as license_number,
+    1 as status, '2026-09-05 10:20:00' as created_at, 'lisi' as owner_account
+  union all
+  select '豆包', '比熊犬', '雄性', 1, 1, '2026-07-18',
+    '13800000001', 'DEMO-2026-002', 0, '2026-11-18 09:30:00', 'lisi'
+  union all
+  select '阿福', '拉布拉多犬', '雄性', 4, 0, null,
+    '13800000001', 'DEMO-2026-003', 2, '2026-10-12 14:10:00', 'lisi'
+  union all
+  select '小满', '中华田园犬', '雌性', 3, 1, '2026-06-08',
+    '13800000002', 'DEMO-2026-004', 1, '2026-08-22 16:45:00', 'wangwu'
+  union all
+  select '可乐', '边境牧羊犬', '雄性', 2, 1, '2026-09-20',
+    '13800000002', 'DEMO-2026-005', 0, '2026-11-21 11:05:00', 'wangwu'
+  union all
+  select '栗子', '柴犬', '雌性', 1, 0, null,
+    '13800000002', 'DEMO-2026-006', 2, '2026-10-28 15:35:00', 'wangwu'
+) as sample
+join users as resident on resident.account = sample.owner_account
+  and resident.role = 'resident'
+where not exists (
+  select 1 from dogs as existing
+  where existing.license_number = sample.license_number
+);
+
+insert into dog_owners (dog_id, user_id, is_primary)
+select d.id, u.id, true
+from dogs as d
+join users as u on u.account = case d.license_number
+  when 'DEMO-2026-001' then 'lisi'
+  when 'DEMO-2026-002' then 'lisi'
+  when 'DEMO-2026-003' then 'lisi'
+  when 'DEMO-2026-004' then 'wangwu'
+  when 'DEMO-2026-005' then 'wangwu'
+  when 'DEMO-2026-006' then 'wangwu'
+end and u.role = 'resident'
+where d.license_number in (
+  'DEMO-2026-001', 'DEMO-2026-002', 'DEMO-2026-003',
+  'DEMO-2026-004', 'DEMO-2026-005', 'DEMO-2026-006'
+)
+  and not exists (
+    select 1 from dog_owners as existing where existing.dog_id = d.id
+  );
+
+-- 待处理投诉不填写处理信息；已处理和已驳回投诉均关联管理员及处理结果。
+insert into complaints (
+  reporter_id, title, content, status, handler_id,
+  handling_result, created_at, handled_at
+)
+select reporter.id, sample.title, sample.content, sample.status,
+  case when sample.status = 0 then null else admin.id end,
+  sample.handling_result, sample.created_at, sample.handled_at
+from (
+  select 'zhangsan' as reporter_account, '夜间遛犬噪声影响休息' as title,
+    '11月24日晚，3号楼附近有犬只持续吠叫，希望提醒犬主注意夜间管理。' as content,
+    0 as status, null as handling_result,
+    '2026-11-25 08:40:00' as created_at, null as handled_at
+  union all
+  select 'lisi', '公共区域未清理犬只排泄物',
+    '11月22日早上，北门步道有犬只排泄物未及时清理，请协助巡查。',
+    0, null, '2026-11-22 09:15:00', null
+  union all
+  select 'wangwu', '犬只在儿童活动区未牵绳',
+    '10月15日下午，儿童活动区有犬只未牵绳，存在安全隐患。',
+    1, '已联系犬主并提醒在公共区域牵绳，物业已加强活动区巡查。',
+    '2026-10-15 17:20:00', '2026-10-16 14:30:00'
+  union all
+  select 'zhangsan', '单元门口犬只长时间吠叫',
+    '9月12日晚上，2号楼单元门口有犬只长时间吠叫。',
+    1, '已与犬主沟通，犬主承诺调整遛犬时间并看护犬只。',
+    '2026-09-13 08:10:00', '2026-09-14 10:00:00'
+  union all
+  select 'lisi', '疑似流浪犬在小区内活动',
+    '10月3日看到一只无人看管的犬只在小区南侧活动，希望核实。',
+    2, '核实后为住户正常陪同遛犬，暂未发现流浪犬。',
+    '2026-10-03 16:50:00', '2026-10-04 11:25:00'
+) as sample
+join users as reporter on reporter.account = sample.reporter_account
+  and reporter.role = 'resident'
+left join users as admin on admin.account = 'admin' and admin.role = 'admin'
+where (sample.status = 0 or admin.id is not null)
+  and not exists (
+    select 1 from complaints as existing
+    where existing.reporter_id = reporter.id and existing.title = sample.title
+  );
+
+-- 已发布公告使用过去的发布时间；空发布时间表示草稿。
+insert into announcements (author_id, title, content, published_at, created_at)
+select admin.id, sample.title, sample.content,
+  sample.published_at, sample.created_at
+from (
+  select '文明养犬与牵绳提醒' as title,
+    '请居民在小区公共区域为犬只佩戴牵引绳，主动避让老人和儿童，并及时清理犬只排泄物。' as content,
+    '2026-09-01 09:00:00' as published_at,
+    '2026-08-30 15:00:00' as created_at
+  union all
+  select '秋季犬只免疫登记通知',
+    '请尚未完成年度免疫的犬主携带免疫证明，及时更新犬只登记信息。',
+    '2026-10-08 10:00:00', '2026-10-07 14:30:00'
+  union all
+  select '公共区域养犬管理提示',
+    '遛犬时请避开儿童活动区，不让犬只进入绿化养护区域，共同维护社区环境。',
+    '2026-11-05 08:30:00', '2026-11-04 16:20:00'
+  union all
+  select '犬只登记信息核对提醒',
+    '请居民核对犬只联系方式和免疫日期；信息发生变化时，请及时提交更新。',
+    '2026-11-20 09:00:00', '2026-11-19 13:40:00'
+  union all
+  select '冬季文明养犬宣传计划',
+    '拟开展冬季文明养犬宣传活动，具体时间和地点待确认后发布。',
+    null, '2026-11-26 10:15:00'
+) as sample
+join users as admin on admin.account = 'admin' and admin.role = 'admin'
+where not exists (
+  select 1 from announcements as existing
+  where existing.author_id = admin.id and existing.title = sample.title
+);
 commit;

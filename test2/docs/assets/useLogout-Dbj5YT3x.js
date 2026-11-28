@@ -1,0 +1,1 @@
+import{ag as a,u as o,s as n,ah as r}from"./index-DeV_Hr7n.js";function c(){const e=a(),s=o();return(t="/front")=>{e(n("")),e(r({role:"resident",account:"",name:""})),s(t,{replace:!0})}}export{c as u};

@@ -13,7 +13,14 @@ function App() {
       theme={{
         token: {
           // 这里的颜色就是我们要的主色调：清新绿
-          colorPrimary: '#52c41a',
+          colorPrimary: '#087e92',
+          colorText: '#17333b',
+          colorTextSecondary: '#627780',
+          colorBorder: '#d7e4e8',
+          colorBgLayout: '#eef3f5',
+          colorSuccess: '#3e916d',
+          colorWarning: '#c98632',
+          colorError: '#bd5262',
           // 圆角也稍微圆润一点，增加亲和力
           borderRadius: 8,
           // 字体优化
@@ -23,7 +30,7 @@ function App() {
         },
         components: {
           Layout: {
-            bodyBg: '#f5f7fa',
+            bodyBg: '#eef3f5',
             headerBg: '#ffffff',
           },
           Card: {

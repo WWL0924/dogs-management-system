@@ -22,3 +22,11 @@ export interface Complaint {
   status: number
   title?: string
 }
+
+export interface Announcement {
+  id: number
+  title: string
+  content: string
+  publishedAt: string | null
+  authorName: string
+}

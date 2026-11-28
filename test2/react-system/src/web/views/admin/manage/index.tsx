@@ -1,10 +1,10 @@
 import FormGenerator from "@/components/formGenerator";
 import { mineConfig } from "@/views/resident/mine/config";
-import { Button, Modal, Table, type FormInstance } from "antd"
+import { Button, message, Modal, Table, type FormInstance } from "antd"
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import type { Dog } from '@/types/domain'
-import { apiFetch } from '@/api'
+import { apiFetch, apiJson } from '@/api'
 
 
 const Manage = () => {
@@ -26,14 +26,14 @@ const Manage = () => {
   //获取所有犬只信息
   const fetchData = async () => {
     try {
-      const response = await apiFetch('/api/dogs?status=0');
-      const res = await response.json();
+      const res = await apiJson<Dog[]>('/api/dogs?status=0');
       console.log('#响应', res)
       const data = res.filter((item) => item.status === 0)
       console.log('#所有未审核数据', data)
       setManageData(data);
     } catch (error) {
       console.error('获取数据失败:', error);
+      message.error(error instanceof Error ? error.message : '待审核犬只加载失败')
     }
   };
   //组件挂载时获取数据
@@ -81,9 +81,12 @@ const Manage = () => {
         // 更新成功后刷新数据
         fetchData()
         setVisible(false)
+      } else {
+        message.error((await res.json()).message || '审核失败')
       }
     } catch (error) {
       console.error('更新数据失败:', error);
+      message.error(error instanceof Error ? error.message : '审核失败')
     }
   }
   //点击 驳回
@@ -104,9 +107,12 @@ const Manage = () => {
         // 更新成功后刷新数据
         fetchData()
         setVisible(false)
+      } else {
+        message.error((await res.json()).message || '驳回失败')
       }
     } catch (error) {
       console.error('更新数据失败:', error);
+      message.error(error instanceof Error ? error.message : '驳回失败')
     }
   }
 

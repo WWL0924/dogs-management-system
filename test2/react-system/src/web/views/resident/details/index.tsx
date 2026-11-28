@@ -1,5 +1,5 @@
 import FormGenerator from "@/components/formGenerator"
-import { Button, Modal, Table, type FormInstance } from "antd"
+import { Button, message, Modal, Table, type FormInstance } from "antd"
 import { useCallback, useEffect, useRef, useState } from "react"
 //生成器配置
 const mineConfig = [
@@ -47,7 +47,7 @@ import { connect } from "react-redux"
 import dayjs from "dayjs"
 import type { RootState } from '@/redux/interface'
 import type { Dog } from '@/types/domain'
-import { apiFetch } from '@/api'
+import { apiFetch, apiJson } from '@/api'
 const Details = (props: { name: string }) => {
   //列表数据
   const [detailData, setDetailData] = useState<Dog[]>([]) // 犬只数据
@@ -60,15 +60,15 @@ const Details = (props: { name: string }) => {
   const { name } = props
 
   const fetchData = useCallback(async () => {
-    const res = await apiFetch('/api/dogs')
-    const data = await res.json()
+    const data = await apiJson<Dog[]>('/api/dogs')
     //只能显示对应用户的犬只
-    const userDogs = data.filter((item: Dog) => item.masterName === name)
-    setDetailData(userDogs)
-  }, [name])
+    setDetailData(data)
+  }, [])
   useEffect(() => {
-    void Promise.resolve().then(fetchData)
-  }, [fetchData])
+    void Promise.resolve().then(fetchData).catch((error) => {
+      message.error(error instanceof Error ? error.message : `${name}的犬只加载失败`)
+    })
+  }, [fetchData, name])
 
 
 
@@ -84,7 +84,7 @@ const Details = (props: { name: string }) => {
       //处理数据
       if (formData.record) {
         formData.record = dayjs(formData.record) //日期
-        formData.sex = formData.sex === '女' ? '雌性' : '雄性' //性别
+        formData.sex = record.sex //性别
         // formData.vaccine = formData.vaccine === true ? '是' : '否' //疫苗
       }
       form.current.setFieldsValue(formData)
@@ -112,9 +112,13 @@ const Details = (props: { name: string }) => {
         setVisible(false)
       } else {
         console.error('更新失败')
+        message.error((await res.json()).message || '更新失败')
       }
     } catch (error) {
       console.error('验证失败', error)
+      if (!(error && typeof error === 'object' && 'errorFields' in error)) {
+        message.error(error instanceof Error ? error.message : '更新失败')
+      }
     }
   }
   //列表渲染的配置项

@@ -2,12 +2,15 @@ import { Typography, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { SmileOutlined, RightOutlined } from '@ant-design/icons';
 import React from 'react';
+import DashboardSummary from '@/components/DashboardSummary';
+import { useLogout } from '@/hooks/useLogout';
 import '../../styles/dashboard.less';
 
 const { Title, Paragraph } = Typography;
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
+  const logout = useLogout();
 
   return (
     <div className="admin-welcome">
@@ -44,7 +47,7 @@ const Admin: React.FC = () => {
             size="large"
             shape="round"
             icon={<RightOutlined />}
-            onClick={() => navigate('/front')}
+            onClick={() => logout()}
             className="action-btn"
             danger
             style={{ boxShadow: 'none' }} // Override specific style for danger button if needed
@@ -53,6 +56,7 @@ const Admin: React.FC = () => {
           </Button>
         </div>
       </div>
+      <DashboardSummary mode="admin" />
     </div>
   );
 };

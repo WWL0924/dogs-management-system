@@ -26,7 +26,6 @@ const Register = () => {
   const handleFinish = async (values: RegisterValues) => {
     //获取账号密码
     const { account, password, role, name } = values
-    console.log(account, password, role, name)
     //存入json
     const http = '/api/auth/register'
     //查重

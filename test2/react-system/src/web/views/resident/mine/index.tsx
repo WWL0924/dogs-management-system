@@ -1,12 +1,12 @@
 
-import { Button, Form, Input, Modal, Table, type FormInstance } from "antd";
+import { Button, Form, Input, message, Modal, Table, type FormInstance } from "antd";
 import { mineConfig } from './config'
 import FormGenerator from "@/components/formGenerator";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import type { RootState } from '@/redux/interface'
 import type { Dog } from '@/types/domain'
-import { apiFetch } from '@/api'
+import { apiJson } from '@/api'
 
 
 function Home(props: { name: string }) {
@@ -22,17 +22,16 @@ function Home(props: { name: string }) {
   //从mock获取数据并且更新data
   const fetchData = useCallback(async () => {
     try {
-      const res = await apiFetch('/api/dogs')
-      const result = await res.json()
-      const data = result.filter((item: Dog) => item.masterName === name)
+      const data = await apiJson<Dog[]>('/api/dogs')
       console.log('从mock中获取的相应用户的犬只', data)
       setMineData(data)
       setTableData(data)
     }
     catch (error) {
       console.log('从mock获取数据失败', error)
+      message.error(error instanceof Error ? error.message : '犬只列表加载失败')
     }
-  }, [name])
+  }, [])
 
   //渲染完毕后获取数据?
   useEffect(() => {
@@ -90,7 +89,7 @@ function Home(props: { name: string }) {
     form.current.validateFields().then(async (values) => {
 
       // 2. 发送 POST 请求
-      await apiFetch('/api/dogs', {
+      await apiJson<Dog>('/api/dogs', {
         method: 'POST', // 指定方法
         headers: {
           'Content-Type': 'application/json' // 告诉后端发的是 JSON
@@ -99,10 +98,13 @@ function Home(props: { name: string }) {
       });
       // 3. 后续操作
       setVisible(false); // 关弹窗
-      fetchData(); // 刷新列表 (去拿最新数据)
+      await fetchData(); // 刷新列表 (去拿最新数据)
 
     }).catch((error) => {
       console.log('校验失败或请求失败', error);
+      if (!(error && typeof error === 'object' && 'errorFields' in error)) {
+        message.error(error instanceof Error ? error.message : '新增犬只失败')
+      }
     });
   };
 
